@@ -12,4 +12,6 @@ fetch("https://api.openweathermap.org/data/2.5/weather?q=Neuquén&units=metric&a
     .then(data => console.log(data))
     .catch(err => console.log(err))
 
+    //test
+
     
