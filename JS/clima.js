@@ -31,12 +31,12 @@ function obtenerDatos(ciudad){
     .then(Response => Response.json())
     .then(data => {console.log(data);
         setActual(data);
-        fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+data.coord.lat+"&lon="+data.coord.lon+"&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")// pronostico
+        fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+actual.coord.lat+"&lon="+actual.coord.lon+"&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")// pronostico
         .then(Response => Response.json())
         .then(data => {console.log(data);
             setPronostico(datos);
             tiempoUnix();//actualiza el tiempo a 5 días atras de la fecha actual
-            fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+data.coord.lat+"&lon="+data.coord.lon+"&dt="+tiempo+"&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")//historico
+            fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+actual.coord.lat+"&lon="+actual.coord.lon+"&dt="+tiempo+"&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")//historico
             .then(Response => Response.json())
             .then(data => {console.log(data);
                 setHistorico(data);})}
