@@ -15,14 +15,13 @@ function tiempoUnix(t) {
 async function llamadasHistorico(){
     //se realizan 5 llamadas a la API historico, uno por cada día antes de la fecha actual.
     for(i=1;i<=5;i++){
-        fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+this.actual.coord.lat+"&lon="+this.actual.coord.lon+"&dt="+tiempoUnix(i)+"&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")//historico
+        var respuesta = await fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+this.actual.coord.lat+"&lon="+this.actual.coord.lon+"&dt="+tiempoUnix(i)+"&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")//historico
         .then(Response => Response.json())
         .then(data => {console.log(data);
+            console.log(data.current.dt)
             setHistorico(data)})
     }
-    console.log(this.historico);
-    
-    
+    return respuesta;
 }
 
 
@@ -38,7 +37,7 @@ function obtenerDatos(ciudad){
         .then(Response => Response.json())
         .then(data => {console.log(data);
             setPronostico(data);
-            llamadasHistorico().then(ordenarHistoricos());}
+            llamadasHistorico().then(()=>{ordenarHistoricos();console.log(this.historico);});}//luego de completar las llamadas, procede a realizar el ordenamiento de los datos
             );
         })
     .catch(err => console.log(err))
@@ -57,22 +56,25 @@ function setPronostico(datos){
 function setHistorico(datos){
     this.historico.push(datos);
     
+    
 }
 
 function ordenarHistoricos(){
-    //método para ordenar por días, desde el día mas cercano a la fecha actual, al más lejano
+    //método para ordenar por días, desde el día mas cercano a la fecha actual, al más lejano (burbuja)
     console.log("ordenar Historicos");
-    let auxiliar;
-    for(i=0;i<=this.historico.lenght-1;i++){
-        for (let j = i+1; j < this.historico.length; j++) {
-            if(this.historico[i].current.dt<this.historico[j].current.dt){
-                auxiliar=this.historico[i];
-                this.historico[i]=this.historico[j];
-                this.historico[j]=auxiliar;
+    var auxiliar;
+    var i,j;
+    for(i=1;i<=this.historico.length-1;i++){
+        for (j = 0; j < this.historico.length-i; j++) {
+            if(this.historico[j+1].current.dt<this.historico[j].current.dt){
+                console.log(this.historico[j].current.dt);
+                console.log(this.historico[j+1].current.dt)
+                auxiliar=this.historico[j];
+                this.historico[j]=this.historico[j+1];
+                this.historico[j+1]=auxiliar;
             }
         }
     }
-    console.log(this.historico);
 }
 
     
