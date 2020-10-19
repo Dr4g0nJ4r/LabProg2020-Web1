@@ -6,12 +6,6 @@ let historico=[]; // 5 días antes...
 let actual // datos actuales del clima
 let pronostico // datos 5 días después..
 
-/*
-fetch("https://api.openweathermap.org/data/2.5/weather?q=Neuquén&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")
-    .then(Response => Response.json())
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
-*/
 function tiempoUnix(t) {
     //método por el cual se calcula el tiempo Unix (tiempo medido en segundos) de los 5 días previos al acual...
     return Math.floor(Date.now() / 1000) - (86400 *t);// se restan el equivalente a 5 días en cantidad de segundos
@@ -20,19 +14,20 @@ function tiempoUnix(t) {
 
 function llamadasHistorico(){
     //se realizan 5 llamadas a la API historico, uno por cada día antes de la fecha actual.
-    for(i=0;i<5;i++){
+    for(i=1;i<=5;i++){
         
         fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+this.actual.coord.lat+"&lon="+this.actual.coord.lon+"&dt="+tiempoUnix(i)+"&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")//historico
         .then(Response => Response.json())
-        .then(data => {console.log(data);
-                setHistorico(data);})
+        .then(data => {console.log(data)})
     }
     
 
 }
 
-console.log("tiempo actual = " + Math.floor(Date.now() / 1000))
-console.log("tiempo 5 días atras = " + (Math.floor(Date.now() / 1000) - (86400 *5)))
+//setHistorico(data);
+
+//console.log("tiempo actual = " + Math.floor(Date.now() / 1000))
+//console.log("tiempo 5 días atras = " + (Math.floor(Date.now() / 1000) - (86400 *5)))
 
 
 obtenerDatos("Neuquén");//test
@@ -47,7 +42,6 @@ function obtenerDatos(ciudad){
         .then(Response => Response.json())
         .then(data => {console.log(data);
             setPronostico(data);
-            tiempoUnix();//actualiza el tiempo a 5 días atras de la fecha actual
             llamadasHistorico();}
             );
         })
@@ -66,6 +60,12 @@ function setPronostico(datos){
 
 function setHistorico(datos){
     this.historico.push(datos);
+}
+
+function ordenarHistoricos(){
+    //método para ordenar por días, desde el día mas cercano a la fecha actual, al más lejano
+    let fechaAux;
+
 }
 
     
