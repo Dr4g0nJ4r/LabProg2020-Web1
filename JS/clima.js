@@ -5,7 +5,6 @@
 let historico=[]; // 5 días antes...
 let actual // datos actuales del clima
 let pronostico // datos 5 días después..
-let tiempo //tiempo Unix de los 5 días anteriores al actual
 
 /*
 fetch("https://api.openweathermap.org/data/2.5/weather?q=Neuquén&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")
@@ -13,16 +12,17 @@ fetch("https://api.openweathermap.org/data/2.5/weather?q=Neuquén&units=metric&a
     .then(data => console.log(data))
     .catch(err => console.log(err))
 */
-function tiempoUnix() {
+function tiempoUnix(t) {
     //método por el cual se calcula el tiempo Unix (tiempo medido en segundos) de los 5 días previos al acual...
-    tiempo = Math.floor(Date.now() / 1000) - (86400 *5);// se restan el equivalente a 5 días en cantidad de segundos
+    return Math.floor(Date.now() / 1000) - (86400 *t);// se restan el equivalente a 5 días en cantidad de segundos
         
 }
 
 function llamadasHistorico(){
     //se realizan 5 llamadas a la API historico, uno por cada día antes de la fecha actual.
     for(i=0;i<5;i++){
-        fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+this.actual.coord.lat+"&lon="+this.actual.coord.lon+"&dt="+this.tiempo+"&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")//historico
+        
+        fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+this.actual.coord.lat+"&lon="+this.actual.coord.lon+"&dt="+tiempoUnix(i)+"&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")//historico
         .then(Response => Response.json())
         .then(data => {console.log(data);
                 setHistorico(data);})
