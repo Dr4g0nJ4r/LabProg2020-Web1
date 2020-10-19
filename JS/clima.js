@@ -2,7 +2,7 @@
 //obtenidos desde una API. tendremos  tres grupos de datos.
 //los datos del historico, actuales y el pronostico.
 
-let historico=[]; // 5 días antes...
+let historico={}; // 5 días antes...
 let actual // datos actuales del clima
 let pronostico // datos 5 días después..
 
@@ -12,15 +12,16 @@ function tiempoUnix(t) {
         
 }
 
-function llamadasHistorico(){
+function llamadasHistorico(h){
     //se realizan 5 llamadas a la API historico, uno por cada día antes de la fecha actual.
     for(i=1;i<=5;i++){
         
         fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+this.actual.coord.lat+"&lon="+this.actual.coord.lon+"&dt="+tiempoUnix(i)+"&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")//historico
         .then(Response => Response.json())
-        .then(data => {console.log(data)})
+        .then(data => {console.log(data);
+            h.i=data})
     }
-    
+    setHistorico(h);
 
 }
 
@@ -42,7 +43,7 @@ function obtenerDatos(ciudad){
         .then(Response => Response.json())
         .then(data => {console.log(data);
             setPronostico(data);
-            llamadasHistorico();}
+            llamadasHistorico(this.historico);}
             );
         })
     .catch(err => console.log(err))
@@ -59,12 +60,13 @@ function setPronostico(datos){
 }
 
 function setHistorico(datos){
-    this.historico.push(datos);
+    this.historico=datos;
+    
 }
 
 function ordenarHistoricos(){
     //método para ordenar por días, desde el día mas cercano a la fecha actual, al más lejano
-    let fechaAux;
+    console.log("ordenar Historicos")
 
 }
 
