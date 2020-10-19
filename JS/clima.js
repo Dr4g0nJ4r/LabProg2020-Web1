@@ -18,7 +18,8 @@ function tiempoUnix() {
         
 }
 
-console.log(Date.now())
+console.log("tiempo actual = " + Math.floor(Date.now() / 1000))
+console.log("tiempo 5 días atras = " + (Math.floor(Date.now() / 1000) - (86400 *5)))// se restan el equivalente a 5 días en cantidad de segundos
 /*
 function obtenerDatos(ciudad){
     fetch("https://api.openweathermap.org/data/2.5/weather?q="+ciudad+"&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")
