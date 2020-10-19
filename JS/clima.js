@@ -4,7 +4,7 @@
 
 var historico = []; // 5 días antes...
 var actual // datos actuales del clima
-var pronostico // datos 5 días después..
+var pronostico // datos 7 días después..
 
 
 obtenerDatos("Neuquén");//test
