@@ -23,7 +23,7 @@ console.log("tiempo actual = " + Math.floor(Date.now() / 1000))
 console.log("tiempo 5 días atras = " + (Math.floor(Date.now() / 1000) - (86400 *5)))
 
 
-obtenerDatos("Nequén");//test
+obtenerDatos("Neuquén");//test
 
 
 function obtenerDatos(ciudad){
@@ -31,7 +31,7 @@ function obtenerDatos(ciudad){
     .then(Response => Response.json())
     .then(data => {console.log(data);
         setActual(data);
-        fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+data.coord.lat+"&lon="+data.coord.lon+"&appid=073b5617fc4dbf48ce277078f57f3caf")// pronostico
+        fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+data.coord.lat+"&lon="+data.coord.lon+"&exclude=current,minutely,hourly,alerts&appid=073b5617fc4dbf48ce277078f57f3caf")// pronostico
         .then(Response => Response.json())
         .then(data => {console.log(data);
             setPronostico(datos);
