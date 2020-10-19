@@ -12,21 +12,18 @@ function tiempoUnix(t) {
         
 }
 
-function llamadasHistorico(){
+async function llamadasHistorico(){
     //se realizan 5 llamadas a la API historico, uno por cada día antes de la fecha actual.
     for(i=1;i<=5;i++){
         fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+this.actual.coord.lat+"&lon="+this.actual.coord.lon+"&dt="+tiempoUnix(i)+"&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")//historico
         .then(Response => Response.json())
         .then(data => {console.log(data);
-            this.historico.push(data)})
+            setHistorico(data)})
     }
-
+    console.log(this.historico);
+    
+    
 }
-
-//setHistorico(data);
-
-//console.log("tiempo actual = " + Math.floor(Date.now() / 1000))
-//console.log("tiempo 5 días atras = " + (Math.floor(Date.now() / 1000) - (86400 *5)))
 
 
 obtenerDatos("Neuquén");//test
@@ -41,7 +38,7 @@ function obtenerDatos(ciudad){
         .then(Response => Response.json())
         .then(data => {console.log(data);
             setPronostico(data);
-            llamadasHistorico();}
+            llamadasHistorico().then(ordenarHistoricos());}
             );
         })
     .catch(err => console.log(err))
@@ -58,14 +55,24 @@ function setPronostico(datos){
 }
 
 function setHistorico(datos){
-    this.historico=datos;
+    this.historico.push(datos);
     
 }
 
 function ordenarHistoricos(){
     //método para ordenar por días, desde el día mas cercano a la fecha actual, al más lejano
-    console.log("ordenar Historicos")
-
+    console.log("ordenar Historicos");
+    let auxiliar;
+    for(i=0;i<=this.historico.lenght-1;i++){
+        for (let j = i+1; j < this.historico.length; j++) {
+            if(this.historico[i].current.dt<this.historico[j].current.dt){
+                auxiliar=this.historico[i];
+                this.historico[i]=this.historico[j];
+                this.historico[j]=auxiliar;
+            }
+        }
+    }
+    console.log(this.historico);
 }
 
     
