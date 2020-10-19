@@ -15,23 +15,27 @@ fetch("https://api.openweathermap.org/data/2.5/weather?q=Neuquén&units=metric&a
 */
 function tiempoUnix() {
     //método por el cual se calcula el tiempo Unix (tiempo medido en segundos) de los 5 días previos al acual...
+    tiempo = Math.floor(Date.now() / 1000) - (86400 *5);// se restan el equivalente a 5 días en cantidad de segundos
         
 }
 
 console.log("tiempo actual = " + Math.floor(Date.now() / 1000))
-console.log("tiempo 5 días atras = " + (Math.floor(Date.now() / 1000) - (86400 *5)))// se restan el equivalente a 5 días en cantidad de segundos
-/*
+console.log("tiempo 5 días atras = " + (Math.floor(Date.now() / 1000) - (86400 *5)))
+
+
+obtenerDatos("Nequén");//test
+
+
 function obtenerDatos(ciudad){
     fetch("https://api.openweathermap.org/data/2.5/weather?q="+ciudad+"&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")
     .then(Response => Response.json())
     .then(data => {console.log(data);
         setActual(data);
-
         fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+data.coord.lat+"&lon="+data.coord.lon+"&appid=073b5617fc4dbf48ce277078f57f3caf")// pronostico
         .then(Response => Response.json())
         .then(data => {console.log(data);
             setPronostico(datos);
-            tiempoUnix();
+            tiempoUnix();//actualiza el tiempo a 5 días atras de la fecha actual
             fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+data.coord.lat+"&lon="+data.coord.lon+"&dt="+tiempo+"&appid=073b5617fc4dbf48ce277078f57f3caf")
             .then(Response => Response.json())
             .then(data => {console.log(data);
@@ -41,7 +45,8 @@ function obtenerDatos(ciudad){
     .catch(err => console.log(err))
 
 }
-*/
+
+
 function setActual(datos){
     this.actual=datos;
 }
