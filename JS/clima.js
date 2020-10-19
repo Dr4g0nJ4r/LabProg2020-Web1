@@ -65,7 +65,7 @@ function setPronostico(datos){
 }
 
 function setHistorico(datos){
-    this.historico.append(datos);
+    this.historico.push(datos);
 }
 
     
