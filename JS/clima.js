@@ -109,3 +109,35 @@ function getPronostico(){
 function getHistorico(){
     return this.historico;
 }
+// FUNCIONES PARA MODIFICAR HTML
+function setTemperature(temp) {
+
+}
+
+function setTempMin(temp) {
+
+}
+
+function setTempMax(temp) {
+
+}
+
+function setWind(speed, deg) {
+
+}
+
+function setRain(rain) {
+
+}
+
+function setSnow(snow) {
+
+}
+
+function setHumidity(humidity) {
+
+}
+
+function setPressure(pressure) {
+
+}
