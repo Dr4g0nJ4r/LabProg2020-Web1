@@ -24,8 +24,10 @@ function obtenerDatos(ciudad) {
                 .then(data => {
                         console.log(data);
                         setPronostico(data);
-                        llamadasHistorico().then(() => { ordenarHistoricos();
-                            console.log(this.historico); });
+                        llamadasHistorico().then(() => {
+                            ordenarHistoricos();
+                            console.log(this.historico);
+                        });
                     } //luego de completar las llamadas, procede a realizar el ordenamiento de los datos
                 );
         })
@@ -84,5 +86,37 @@ function setPronostico(datos) {
 function setHistorico(datos) {
     this.historico.push(datos);
 
+
+}
+// FUNCIONES PARA MODIFICAR HTML
+function setTemperature(temp) {
+
+}
+
+function setTempMin(temp) {
+
+}
+
+function setTempMax(temp) {
+
+}
+
+function setWind(speed, deg) {
+
+}
+
+function setRain(rain) {
+
+}
+
+function setSnow(snow) {
+
+}
+
+function setHumidity(humidity) {
+
+}
+
+function setPressure(pressure) {
 
 }
