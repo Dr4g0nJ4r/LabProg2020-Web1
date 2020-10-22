@@ -12,7 +12,7 @@ var longitud  //longitud de la ciudad
 
 fetch('./JS/listCities.json')
     .then(response => response.json())
-    .then(obj => {for (x in obj){ if(x.name == "Neuquén"){this.latitud=x.coord.lat;this.longitud=x.coord.lon}}})
+    .then(obj => {for(x=0; i<=obj.length;i++){if(obj[x].name == "Neuquén"){this.latitud=x.coord.lat;this.longitud=x.coord.lon;console.log("exito"+x.coord.lat+" "+x.coord.lon)}}})
 
 ActualizarDatos("Neuquén",longitud,latitud); //test
 
@@ -22,8 +22,11 @@ function ActualizarDatos(ciudad,lat,lon){
     actualizarActual(ciudad);
 
     actualizarPronostico(lat,lon);
-
+    console.log(this.longitud)
+    console.log(this.latitud)
     actualizarHistorico(lat,lon);
+    console.log(this.longitud)
+    console.log(this.latitud)
 }
 
 
@@ -32,7 +35,7 @@ function ActualizarDatos(ciudad,lat,lon){
 /*Esta funcion realiza todas las peticiones a la API del clima y las almacena para su posterior uso.
 en cuanto a los datos del historico, realizar un llamado por cada día consultado hasta un maximo de 5 días antes
 de la fecha actual, luego los ordena de menor a mayor*/
-function actualizarActual(ciudad) {
+sync function actualizarActual(ciudad) {
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf`)
         .then(Response => Response.json())
