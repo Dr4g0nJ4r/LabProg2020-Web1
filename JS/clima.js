@@ -47,7 +47,7 @@ function actualizarActual(ciudad) {
             setTemperature(data.main.temp);
             setTempMin(data.main.temp_min);
             setTempMax(data.main.temp_max);
-            setWind(data.main.wind.speed,data.main.wind.deg);
+            setWind(data.wind.speed,data.wind.deg);
             setRain()
             setSnow()
             setHumidity(data.main.humidity);
