@@ -7,7 +7,7 @@ var actual // datos actuales del clima
 var pronostico // datos 7 días después..
 var latitud  //latitud de la ciudad
 var longitud  //longitud de la ciudad
-
+////////////////////////////////////////////TEST/////////////////////////////////////////
 //busco en el json las coordenadas de la ciudad y actualizo las variables longitud y latitud. (Test)
 
 fetch('./JS/listaCiudadesArgentina.json')
@@ -19,7 +19,7 @@ fetch('./JS/listaCiudadesArgentina.json')
                 this.longitud=obj[x].coord.lon;
                 ActualizarDatos("Neuquén",this.longitud,this.latitud);//Test
                 console.log("exito"+obj[x].name+obj[x].coord.lat+" "+obj[x].coord.lon)}}})
-
+/////////////////////////////TEST////////////////////////////////////////
  
 
 
@@ -158,7 +158,7 @@ function setTempMax(temp) {
 
 }
 
-function setWind(speed, deg) {
+function setWind(speed,deg) {
     switch (deg) {
         case deg < 180:
             document.getElementById("logo_viento").src = `iconos/wind/001-down-arrow.png`;
