@@ -5,10 +5,10 @@
 var historico = []; // 5 días antes...
 var actual // datos actuales del clima
 var pronostico // datos 7 días después..
-var latitud
-var longitud
+var latitud  //latitud de la ciudad
+var longitud  //longitud de la ciudad
 
-//busco en el json las coordenadas de la ciudad 
+//busco en el json las coordenadas de la ciudad y actualizo las variables longitud y latitud. (Test)
 
 fetch('./JS/listCities.json')
     .then(response => response.json())
@@ -19,9 +19,11 @@ ActualizarDatos("Neuquén",longitud,latitud); //test
 
 /*Método por el cual la pagina se puede actualizar con los datos de la ciudad requerida */
 function ActualizarDatos(ciudad,lat,lon){
+    actualizarActual(ciudad);
 
+    actualizarPronostico(lat,lon);
 
-    
+    actualizarHistorico(lat,lon);
 }
 
 
@@ -30,35 +32,45 @@ function ActualizarDatos(ciudad,lat,lon){
 /*Esta funcion realiza todas las peticiones a la API del clima y las almacena para su posterior uso.
 en cuanto a los datos del historico, realizar un llamado por cada día consultado hasta un maximo de 5 días antes
 de la fecha actual, luego los ordena de menor a mayor*/
-function obtenerActual(ciudad) {
+function actualizarActual(ciudad) {
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf`)
         .then(Response => Response.json())
         .then(data => {
             console.log(data);
             setActual(data);
-            return data;
+
+            setTemperature(data.main.temp); 
+            setTempMin(data.main.temp_min);
+            setTempMax(data.main.temp_max);
+            setWind(data.main.wind.speed,data.main.wind.deg);
+            setRain()
+            setSnow()
+            setHumidity(data.main.humidity);
+            setPressure(data.main.pressure);
+
+            
         })
         .catch(err => console.log(err));
         
 }
 /*Funcion que me sirve para realizar un llamado a la API y pedir los datos del pronostico climático de los
 próximos 7 días*/ 
-function obtenerPronostico(lat,lon){
-    fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon=${lon}&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
+function actualizarPronostico(lat,lon){
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
                 .then(Response => Response.json())
                 .then(data => {
                     console.log(data);
                     setPronostico(data);
-                    return data;})
+                })
                 .catch(err => console.log(err))
     
 }
 
 
 /*Función para obtener de la API los datos del clima histórico hasta 5 días antes de la fecha actual*/
-function obtenerHistorico(lat,lon){
-    this.llamadasHistorico(lat,lon).then(()=>{this.ordenarHistoricos();return getHistorico()})
+function actualizarHistorico(lat,lon){
+    this.llamadasHistorico(lat,lon).then(()=>{this.ordenarHistoricos();})
     
 }
 
