@@ -88,7 +88,7 @@ function ordenarHistoricos() {
 function setActual(datos) {
     this.actual = datos;
     setTemperature(19);
-    setWind(20);
+    setWind(20, 90);
 }
 
 function setPronostico(datos) {
@@ -126,6 +126,15 @@ function setTempMax(temp) {
 }
 
 function setWind(speed, deg) {
+    switch (deg) {
+        case deg < 180:
+            document.getElementById("logo_viento").src = `iconos/wind/001-down-arrow.png`;
+            break;
+
+        default:
+            document.getElementById("logo_viento").src = `iconos/002-wind.png`;
+            break;
+    }
     document.getElementById("valor_viento").innerHTML = `${speed} km/h`;
 }
 
