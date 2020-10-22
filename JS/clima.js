@@ -5,8 +5,8 @@
 var historico = []; // 5 días antes...
 var actual // datos actuales del clima
 var pronostico // datos 7 días después..
-var latitud  //latitud de la ciudad
-var longitud  //longitud de la ciudad
+var latitud //latitud de la ciudad
+var longitud //longitud de la ciudad
 
 
 ////////////////////////////////////////////TEST/////////////////////////////////////////
@@ -15,21 +15,24 @@ var longitud  //longitud de la ciudad
 fetch('./JS/listaCiudadesArgentina.json')
     .then(response => response.json())
     .then(obj => {
-        for(x=0; x<=obj.length;x++){
-            if(obj[x].name == "Neuquén"){
-                this.latitud=obj[x].coord.lat;
-                this.longitud=obj[x].coord.lon;
-                ActualizarDatos("Neuquén",this.latitud,this.longitud);//Test
-                console.log("exito"+obj[x].name+obj[x].coord.lat+" "+obj[x].coord.lon)}}})
-/////////////////////////////TEST////////////////////////////////////////
- 
+        for (x = 0; x <= obj.length; x++) {
+            if (obj[x].name == "Neuquén") {
+                this.latitud = obj[x].coord.lat;
+                this.longitud = obj[x].coord.lon;
+                ActualizarDatos("Neuquén", this.latitud, this.longitud); //Test
+                console.log("exito" + obj[x].name + obj[x].coord.lat + " " + obj[x].coord.lon)
+            }
+        }
+    })
+    /////////////////////////////TEST////////////////////////////////////////
+
 
 
 /*Método por el cual la pagina se puede actualizar con los datos de la ciudad requerida */
-function ActualizarDatos(ciudad,lat,lon){
+function ActualizarDatos(ciudad, lat, lon) {
     actualizarActual(ciudad);
-    actualizarPronostico(lat,lon);
-    actualizarHistorico(lat,lon);
+    actualizarPronostico(lat, lon);
+    actualizarHistorico(lat, lon);
 }
 
 
@@ -49,7 +52,7 @@ function actualizarActual(ciudad) {
             setTemperature(data.main.temp);
             setTempMin(data.main.temp_min);
             setTempMax(data.main.temp_max);
-            setWind(data.wind.speed,data.wind.deg);
+            setWind(data.wind.speed, data.wind.deg);
             setRain()
             setSnow()
             setHumidity(data.main.humidity);
@@ -62,21 +65,21 @@ function actualizarActual(ciudad) {
 }
 /*Funcion que me sirve para realizar un llamado a la API y pedir los datos del pronostico climático de los
 próximos 7 días*/
-function actualizarPronostico(lat,lon){
-    fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
-                .then(Response => Response.json())
-                .then(data => {
-                    console.log(data);
-                    setPronostico(data);
-                })
-                .catch(err => console.log(err))
+function actualizarPronostico(lat, lon) {
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
+        .then(Response => Response.json())
+        .then(data => {
+            console.log(data);
+            setPronostico(data);
+        })
+        .catch(err => console.log(err))
 
 }
 
 
 /*Función para obtener de la API los datos del clima histórico hasta 5 días antes de la fecha actual*/
-function actualizarHistorico(lat,lon){
-    this.llamadasHistorico(lat,lon).then(()=>{this.ordenarHistoricos();})
+function actualizarHistorico(lat, lon) {
+    this.llamadasHistorico(lat, lon).then(() => { this.ordenarHistoricos(); })
 
 }
 
@@ -88,9 +91,9 @@ function tiempoUnix(t) {
 
 /*se realizan 5 llamadas a la API historico, uno por cada día antes de la fecha actual.
 Este es un método asincronico, espera todas las respuestas de la API, antes de devolerlos*/
-async function llamadasHistorico(lat,lon) {
+async function llamadasHistorico(lat, lon) {
     for (i = 1; i <= 5; i++) {
-        var respuesta = await fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+lat+"&lon="+lon+"&dt="+tiempoUnix(i)+"&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") //historico
+        var respuesta = await fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + lat + "&lon=" + lon + "&dt=" + tiempoUnix(i) + "&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") //historico
             .then(Response => Response.json())
             .then(data => {
                 console.log(data);
@@ -122,8 +125,6 @@ function ordenarHistoricos() {
 
 function setActual(datos) {
     this.actual = datos;
-    setTemperature(19);
-    setWind(20, 90);
 }
 
 function setPronostico(datos) {
@@ -136,20 +137,20 @@ function setHistorico(datos) {
 
 }
 
-function getActual(){
+function getActual() {
     return this.actual;
 }
 
-function getPronostico(){
+function getPronostico() {
     return this.pronostico;
 }
 
-function getHistorico(){
+function getHistorico() {
     return this.historico;
 }
 // FUNCIONES PARA MODIFICAR HTML
 function setTemperature(temp) {
-
+    document.getElementById("valor_temperatura").innerHTML = temp;
 }
 
 function setTempMin(temp) {
@@ -160,7 +161,7 @@ function setTempMax(temp) {
 
 }
 
-function setWind(speed,deg) {
+function setWind(speed, deg) {
     switch (deg) {
         case deg < 180:
             document.getElementById("logo_viento").src = `iconos/wind/001-down-arrow.png`;
