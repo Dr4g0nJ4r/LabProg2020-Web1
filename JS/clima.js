@@ -150,7 +150,7 @@ function getHistorico() {
 }
 // FUNCIONES PARA MODIFICAR HTML
 function setTemperature(temp) {
-    document.getElementById("valor_temperatura").innerHTML = temp;
+    document.getElementById("valor_temperatura").innerHTML = `${temp} °C`;
 }
 
 function setTempMin(temp) {
