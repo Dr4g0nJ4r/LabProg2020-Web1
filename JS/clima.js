@@ -43,7 +43,7 @@ sync function actualizarActual(ciudad) {
             console.log(data);
             setActual(data);
 
-            setTemperature(data.main.temp); 
+            setTemperature(data.main.temp);
             setTempMin(data.main.temp_min);
             setTempMax(data.main.temp_max);
             setWind(data.main.wind.speed,data.main.wind.deg);
@@ -52,13 +52,13 @@ sync function actualizarActual(ciudad) {
             setHumidity(data.main.humidity);
             setPressure(data.main.pressure);
 
-            
+
         })
         .catch(err => console.log(err));
-        
+
 }
 /*Funcion que me sirve para realizar un llamado a la API y pedir los datos del pronostico climático de los
-próximos 7 días*/ 
+próximos 7 días*/
 function actualizarPronostico(lat,lon){
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
                 .then(Response => Response.json())
@@ -67,14 +67,14 @@ function actualizarPronostico(lat,lon){
                     setPronostico(data);
                 })
                 .catch(err => console.log(err))
-    
+
 }
 
 
 /*Función para obtener de la API los datos del clima histórico hasta 5 días antes de la fecha actual*/
 function actualizarHistorico(lat,lon){
     this.llamadasHistorico(lat,lon).then(()=>{this.ordenarHistoricos();})
-    
+
 }
 
 //método por el cual se calcula el tiempo Unix (tiempo medido en segundos) de los 5 días previos al actual...
@@ -119,6 +119,8 @@ function ordenarHistoricos() {
 
 function setActual(datos) {
     this.actual = datos;
+    setTemperature(19);
+    setWind(20, 90);
 }
 
 function setPronostico(datos) {
@@ -156,7 +158,16 @@ function setTempMax(temp) {
 }
 
 function setWind(speed, deg) {
+    switch (deg) {
+        case deg < 180:
+            document.getElementById("logo_viento").src = `iconos/wind/001-down-arrow.png`;
+            break;
 
+        default:
+            document.getElementById("logo_viento").src = `iconos/002-wind.png`;
+            break;
+    }
+    document.getElementById("valor_viento").innerHTML = `${speed} km/h`;
 }
 
 function setRain(rain) {
