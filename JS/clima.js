@@ -7,6 +7,8 @@ var actual // datos actuales del clima
 var pronostico // datos 7 días después..
 var latitud  //latitud de la ciudad
 var longitud  //longitud de la ciudad
+
+
 ////////////////////////////////////////////TEST/////////////////////////////////////////
 //busco en el json las coordenadas de la ciudad y actualizo las variables longitud y latitud. (Test)
 
@@ -17,7 +19,7 @@ fetch('./JS/listaCiudadesArgentina.json')
             if(obj[x].name == "Neuquén"){
                 this.latitud=obj[x].coord.lat;
                 this.longitud=obj[x].coord.lon;
-                ActualizarDatos("Neuquén",this.longitud,this.latitud);//Test
+                ActualizarDatos("Neuquén",this.latitud,this.longitud);//Test
                 console.log("exito"+obj[x].name+obj[x].coord.lat+" "+obj[x].coord.lon)}}})
 /////////////////////////////TEST////////////////////////////////////////
  
