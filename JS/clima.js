@@ -12,21 +12,22 @@ var longitud  //longitud de la ciudad
 
 fetch('./JS/listaCiudadesArgentina.json')
     .then(response => response.json())
-    .then(obj => {for(x in obj){if(obj[x].name == "Neuquén"){this.latitud=x.coord.lat;this.longitud=x.coord.lon;console.log("exito"+x.coord.lat+" "+x.coord.lon)}}})
+    .then(obj => {
+        for(x=0; x<=obj.length;x++){
+            if(obj[x].name == "Neuquén"){
+                this.latitud=obj[x].coord.lat;
+                this.longitud=obj[x].coord.lon;
+                ActualizarDatos("Neuquén",this.longitud,this.latitud);//Test
+                console.log("exito"+obj[x].name+obj[x].coord.lat+" "+obj[x].coord.lon)}}})
 
-ActualizarDatos("Neuquén",longitud,latitud); //test
+ 
 
 
 /*Método por el cual la pagina se puede actualizar con los datos de la ciudad requerida */
 function ActualizarDatos(ciudad,lat,lon){
     actualizarActual(ciudad);
-
     actualizarPronostico(lat,lon);
-    console.log(this.longitud)
-    console.log(this.latitud)
     actualizarHistorico(lat,lon);
-    console.log(this.longitud)
-    console.log(this.latitud)
 }
 
 
@@ -87,7 +88,7 @@ function tiempoUnix(t) {
 Este es un método asincronico, espera todas las respuestas de la API, antes de devolerlos*/
 async function llamadasHistorico(lat,lon) {
     for (i = 1; i <= 5; i++) {
-        var respuesta = await fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+lat+"&lon="+lon+"&dt=${tiempoUnix(i)}&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") //historico
+        var respuesta = await fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+lat+"&lon="+lon+"&dt="+tiempoUnix(i)+"&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") //historico
             .then(Response => Response.json())
             .then(data => {
                 console.log(data);
