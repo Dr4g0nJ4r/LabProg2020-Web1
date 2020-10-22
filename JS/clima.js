@@ -12,7 +12,7 @@ var longitud  //longitud de la ciudad
 
 fetch('./JS/listaCiudadesArgentina.json')
     .then(response => response.json())
-    .then(obj => {for(x=0; x<=obj.length;x++){if(obj[x].name == "Neuquén"){this.latitud=x.coord.lat;this.longitud=x.coord.lon;console.log("exito"+x.coord.lat+" "+x.coord.lon)}}})
+    .then(obj => {for(x in obj){if(obj[x].name == "Neuquén"){this.latitud=x.coord.lat;this.longitud=x.coord.lon;console.log("exito"+x.coord.lat+" "+x.coord.lon)}}})
 
 ActualizarDatos("Neuquén",longitud,latitud); //test
 
