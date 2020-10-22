@@ -5,13 +5,27 @@
 var historico = []; // 5 días antes...
 var actual // datos actuales del clima
 var pronostico // datos 7 días después..
+var latitud
+var longitud
 
 //busco en el json las coordenadas de la ciudad 
 
 fetch('./JS/listCities.json')
     .then(response => response.json())
-    .then(obj => {obj.name["Neuquén"]})
-ActualizarDatos("Neuquén"); //test
+    .then(obj => {for (x in obj){ if(x.name == "Neuquén"){this.latitud=x.coord.lat;this.longitud=x.coord.lon}}})
+
+ActualizarDatos("Neuquén",longitud,latitud); //test
+
+
+/*Método por el cual la pagina se puede actualizar con los datos de la ciudad requerida */
+function ActualizarDatos(ciudad,lat,lon){
+
+
+    
+}
+
+
+
 
 /*Esta funcion realiza todas las peticiones a la API del clima y las almacena para su posterior uso.
 en cuanto a los datos del historico, realizar un llamado por cada día consultado hasta un maximo de 5 días antes
