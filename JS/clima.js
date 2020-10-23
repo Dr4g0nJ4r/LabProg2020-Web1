@@ -94,7 +94,6 @@ async function llamadasHistorico(lat,lon) {
             .then(Response => Response.json())
             .then(data => {
                 console.log(data);
-                console.log(data.current.dt)
                 setHistorico(data)
             })
     }
@@ -110,8 +109,6 @@ function ordenarHistoricos() {
     for (i = 1; i <= this.historico.length - 1; i++) {
         for (j = 0; j < this.historico.length - i; j++) {
             if (this.historico[j + 1].current.dt < this.historico[j].current.dt) {
-                console.log(this.historico[j].current.dt);
-                console.log(this.historico[j + 1].current.dt)
                 auxiliar = this.historico[j];
                 this.historico[j] = this.historico[j + 1];
                 this.historico[j + 1] = auxiliar;
