@@ -58,6 +58,8 @@ function actualizarActual(ciudad) {
             setHumidity(data.main.humidity);
             setPressure(data.main.pressure);
 
+            tiempoDate(data.dt);
+
 
         })
         .catch(err => console.log(err));
@@ -87,6 +89,11 @@ function actualizarHistorico(lat, lon) {
 function tiempoUnix(t) {
     return Math.floor(Date.now() / 1000) - (86400 * t); // se restan el equivalente a "t" días en cantidad de segundos.
 
+}
+//método por el cual se puede obtener la fecha a partir de un tiempo Unix..
+function tiempoDate(t){
+    let fecha = new Date(t*1000);
+    console.log(fecha);
 }
 
 /*se realizan 5 llamadas a la API historico, uno por cada día antes de la fecha actual.
