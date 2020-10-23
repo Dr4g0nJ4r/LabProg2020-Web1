@@ -117,6 +117,7 @@ function ordenarHistoricos() {
     }
 }
 
+
 function setActual(datos) {
     this.actual = datos;
     setTemperature(19);
