@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Enlace al archivo clima.js -->
+    <script src="JS/clima.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <!-- style.css personalizado -->
+    <link rel="stylesheet" href="css/style.css">
+    <title>App de Clima</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="./index.html">CLIMA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="./index.html">Inicio <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./forecast.html">Pronóstico</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./weather-history.html">Historial</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./about-us.html">Acerca de</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="flex-container">
+        <div class="container">
+            <h2>Viento</h2>
+            <div class="container">
+                <img id="logo_viento" src="" class="container-fluid">
+            </div>
+            <p id="valor_viento"></p>
+        </div>
+        <div class="container">
+            <h2>Temperatura</h2>
+            <div class="container" id="logo_temperatura"> <img src="http://openweathermap.org/img/wn/10d@2x.png" class="img-fluid" alt=""></div>
+            <p id="valor_temperatura">24°C</p>
+        </div>
+        <div class="container">
+            <h2>Humedad</h2>
+            <div class="container" id="logo_humedad"></div>
+            <p id="valor_humedad"></p>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script type="module" src="JS/cities.js"></script>
+</body>
+
+</html>
