@@ -49,15 +49,8 @@ function actualizarActual(ciudad) {
             console.log(data);
             setActual(data);
 
-            setTemperature(data.main.temp);
-            setTempMin(data.main.temp_min);
-            setTempMax(data.main.temp_max);
-            setWind(data.wind.speed, data.wind.deg);
-            setRain()
-            setSnow()
-            setHumidity(data.main.humidity);
-            setPressure(data.main.pressure);
-
+            //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
+            refrescarPanelPrincipal();
             tiempoDate(data.dt);
 
 
@@ -91,8 +84,8 @@ function tiempoUnix(t) {
 
 }
 //método por el cual se puede obtener la fecha a partir de un tiempo Unix..
-function tiempoDate(t){
-    let fecha = new Date(t*1000);
+function tiempoDate(t) {
+    let fecha = new Date(t * 1000);
     console.log(fecha);
 }
 
@@ -153,20 +146,11 @@ function getPronostico() {
 function getHistorico() {
     return this.historico;
 }
-// FUNCIONES PARA MODIFICAR HTML
-function setTemperature(temp) {
-    document.getElementById("valor_temperatura").innerHTML = `${temp} °C`;
-}
 
-function setTempMin(temp) {
-
-}
-
-function setTempMax(temp) {
-
-}
-
-function setWind(speed, deg) {
+function refrescarPanelPrincipal() {
+    document.getElementById("valor_temperatura").innerHTML = `${data.temp} °C`;
+    document.getElementById("valor_presion").innerHTML = `${data.pressure} hP`;
+    document.getElementById("valor_humedad").innerHTML = `${data.humidity} %`;
     switch (deg) {
         case deg < 180:
             document.getElementById("logo_viento").src = `iconos/wind/001-down-arrow.png`;
@@ -177,20 +161,5 @@ function setWind(speed, deg) {
             break;
     }
     document.getElementById("valor_viento").innerHTML = `${speed} km/h`;
-}
-
-function setRain(rain) {
-
-}
-
-function setSnow(snow) {
-
-}
-
-function setHumidity(humidity) {
-
-}
-
-function setPressure(pressure) {
 
 }
