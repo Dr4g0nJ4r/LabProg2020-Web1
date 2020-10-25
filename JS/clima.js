@@ -21,10 +21,11 @@ fetch('./JS/listaCiudadesArgentina.json')
                 this.longitud = obj[x].coord.lon;
                 ActualizarDatos("Neuquén", this.latitud, this.longitud); //Test
                 console.log("exito" + obj[x].name + obj[x].coord.lat + " " + obj[x].coord.lon)
+                console.log(obj[x]);
             }
         }
     })
-//funcion test solo para poder mostrar por formato de fecha los pronosticos y los historicos
+    //funcion test solo para poder mostrar por formato de fecha los pronosticos y los historicos
 function mostrarPorFecha(dato) {
     for (let x in dato) { console.log(tiempoDate(dato[x].dt)) }
 
@@ -56,7 +57,8 @@ function actualizarActual(ciudad) {
 
             //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
             refrescarPanelPrincipal(data);
-            tiempoDate(data.dt);//TEST
+            tiempoDate(data.dt); //TEST
+
 
 
         })
@@ -73,7 +75,7 @@ function actualizarPronostico(lat, lon) {
             setPronostico(data.daily);
             ordenarDatos(data.daily)
             console.log(this.pronostico);
-            mostrarPorFecha(this.pronostico);//Test
+            mostrarPorFecha(this.pronostico); //Test
         })
         .catch(err => console.log(err))
 
@@ -85,7 +87,7 @@ function actualizarHistorico(lat, lon) {
     this.llamadasHistorico(lat, lon).then(() => {
         this.ordenarDatos(this.historico);
         console.log(this.historico);
-        mostrarPorFecha(this.historico)//TEST
+        mostrarPorFecha(this.historico) //TEST
     })
 
 }
