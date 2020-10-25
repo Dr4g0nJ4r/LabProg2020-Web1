@@ -64,9 +64,9 @@ function actualizarPronostico(lat, lon) {
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
         .then(Response => Response.json())
         .then(data => {
-            console.log(data);
-            setPronostico(data);
-            ordenarDatos(this.pronostico)
+            console.log(data.daily);
+            setPronostico(data.daily);
+            ordenarPronosticos(data.daily)
         })
         .catch(err => console.log(err))
 
@@ -75,7 +75,7 @@ function actualizarPronostico(lat, lon) {
 
 /*Función para obtener de la API los datos del clima histórico hasta 5 días antes de la fecha actual*/
 function actualizarHistorico(lat, lon) {
-    this.llamadasHistorico(lat, lon).then(() => { this.ordenarDatos(this.historico); })
+    this.llamadasHistorico(lat, lon).then(() => { this.ordenarHistoricos(this.historico); })
 
 }
 
@@ -105,9 +105,25 @@ async function llamadasHistorico(lat, lon) {
 }
 
 
+//método que ordena por fecha los datos del pronostico..
+function ordenarPronosticos(dato) {
+    console.log("ordenar pronostico");
+    var auxiliar;
+    var i, j;
+    for (i = 1; i <= dato.length - 1; i++) {
+        for (j = 0; j < dato.length - i; j++) {
+            if (dato[j + 1].dt < dato[j].dt) {
+                auxiliar = dato[j];
+                dato[j] = dato[j + 1];
+                dato[j + 1] = auxiliar;
+            }
+        }
+    }
+}
+
 //método para ordenar por días, desde el día mas cercano a la fecha actual, al más lejano (burbuja)
-function ordenarDatos(dato) {
-    console.log("ordenar datos");
+function ordenarHistoricos(dato) {
+    console.log("ordenar historicos");
     var auxiliar;
     var i, j;
     for (i = 1; i <= dato.length - 1; i++) {
