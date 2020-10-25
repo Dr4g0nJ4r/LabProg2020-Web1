@@ -24,7 +24,7 @@ fetch('./JS/listaCiudadesArgentina.json')
             }
         }
     })
-    /////////////////////////////TEST////////////////////////////////////////
+/////////////////////////////TEST////////////////////////////////////////
 
 
 
@@ -50,7 +50,7 @@ function actualizarActual(ciudad) {
             setActual(data);
 
             //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
-            refrescarPanelPrincipal();
+            refrescarPanelPrincipal(data);
             tiempoDate(data.dt);
 
 
@@ -147,7 +147,7 @@ function getHistorico() {
     return this.historico;
 }
 
-function refrescarPanelPrincipal() {
+function refrescarPanelPrincipal(data) {
     document.getElementById("valor_temperatura").innerHTML = `${data.temp} °C`;
     document.getElementById("valor_presion").innerHTML = `${data.pressure} hP`;
     document.getElementById("valor_humedad").innerHTML = `${data.humidity} %`;
