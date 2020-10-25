@@ -148,9 +148,9 @@ function getHistorico() {
 }
 
 function refrescarPanelPrincipal(data) {
-    document.getElementById("valor_temperatura").innerHTML = `${data.temp} °C`;
-    document.getElementById("valor_presion").innerHTML = `${data.pressure} hP`;
-    document.getElementById("valor_humedad").innerHTML = `${data.humidity} %`;
+    document.getElementById("valor_temperatura").innerHTML = `${data.main.temp} °C`;
+    document.getElementById("valor_presion").innerHTML = `${data.main.pressure} hP`;
+    document.getElementById("valor_humedad").innerHTML = `${data.main.humidity} %`;
     switch (deg) {
         case deg < 180:
             document.getElementById("logo_viento").src = `iconos/wind/001-down-arrow.png`;
@@ -160,6 +160,6 @@ function refrescarPanelPrincipal(data) {
             document.getElementById("logo_viento").src = `iconos/002-wind.png`;
             break;
     }
-    document.getElementById("valor_viento").innerHTML = `${speed} km/h`;
+    document.getElementById("valor_viento").innerHTML = `${data.wind.speed} km/h`;
 
 }
