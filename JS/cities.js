@@ -29,4 +29,5 @@ function getCities() {
 function setCities(data) {
     this.cities = data;
 }
+getCities();
 console.log(cities);
