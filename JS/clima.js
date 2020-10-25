@@ -66,6 +66,7 @@ function actualizarPronostico(lat, lon) {
         .then(data => {
             console.log(data);
             setPronostico(data);
+            ordenarDatos(this.pronostico)
         })
         .catch(err => console.log(err))
 
@@ -74,7 +75,7 @@ function actualizarPronostico(lat, lon) {
 
 /*Función para obtener de la API los datos del clima histórico hasta 5 días antes de la fecha actual*/
 function actualizarHistorico(lat, lon) {
-    this.llamadasHistorico(lat, lon).then(() => { this.ordenarHistoricos(); })
+    this.llamadasHistorico(lat, lon).then(() => { this.ordenarDatos(this.historico); })
 
 }
 
@@ -103,18 +104,18 @@ async function llamadasHistorico(lat, lon) {
     return respuesta;
 }
 
-//método para ordenar por días, desde el día mas cercano a la fecha actual, al más lejano (burbuja)
-function ordenarHistoricos() {
 
-    console.log("ordenar Historicos");
+//método para ordenar por días, desde el día mas cercano a la fecha actual, al más lejano (burbuja)
+function ordenarDatos(dato) {
+    console.log("ordenar datos");
     var auxiliar;
     var i, j;
-    for (i = 1; i <= this.historico.length - 1; i++) {
-        for (j = 0; j < this.historico.length - i; j++) {
-            if (this.historico[j + 1].current.dt < this.historico[j].current.dt) {
-                auxiliar = this.historico[j];
-                this.historico[j] = this.historico[j + 1];
-                this.historico[j + 1] = auxiliar;
+    for (i = 1; i <= dato.length - 1; i++) {
+        for (j = 0; j < dato.length - i; j++) {
+            if (dato[j + 1].current.dt < dato[j].current.dt) {
+                auxiliar = dato[j];
+                dato[j] = dato[j + 1];
+                dato[j + 1] = auxiliar;
             }
         }
     }
