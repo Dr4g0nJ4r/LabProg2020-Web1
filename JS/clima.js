@@ -24,6 +24,11 @@ fetch('./JS/listaCiudadesArgentina.json')
             }
         }
     })
+//funcion test solo para poder mostrar por formato de fecha los pronosticos y los historicos
+function mostrarPorFecha(dato) {
+    for (x in dato) { console.log(tiempoDate(dato[x].dt)) }
+
+}
 /////////////////////////////TEST////////////////////////////////////////
 
 
@@ -51,7 +56,7 @@ function actualizarActual(ciudad) {
 
             //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
             refrescarPanelPrincipal(data);
-            tiempoDate(data.dt);
+            tiempoDate(data.dt);//TEST
 
 
         })
@@ -64,9 +69,11 @@ function actualizarPronostico(lat, lon) {
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
         .then(Response => Response.json())
         .then(data => {
-            console.log(data.daily);
+
             setPronostico(data.daily);
             ordenarPronosticos(data.daily)
+            console.log(this.pronostico);
+            mostrarPorFecha(this.pronostico);//Test
         })
         .catch(err => console.log(err))
 
@@ -75,7 +82,11 @@ function actualizarPronostico(lat, lon) {
 
 /*Función para obtener de la API los datos del clima histórico hasta 5 días antes de la fecha actual*/
 function actualizarHistorico(lat, lon) {
-    this.llamadasHistorico(lat, lon).then(() => { this.ordenarHistoricos(this.historico); })
+    this.llamadasHistorico(lat, lon).then(() => {
+        this.ordenarHistoricos(this.historico);
+        console.log(this.historico);
+        mostrarPorFecha(this.historico)//TEST
+    })
 
 }
 
@@ -98,7 +109,7 @@ async function llamadasHistorico(lat, lon) {
             .then(Response => Response.json())
             .then(data => {
                 console.log(data);
-                setHistorico(data)
+                setHistorico(data.current)
             })
     }
     return respuesta;
@@ -128,7 +139,7 @@ function ordenarHistoricos(dato) {
     var i, j;
     for (i = 1; i <= dato.length - 1; i++) {
         for (j = 0; j < dato.length - i; j++) {
-            if (dato[j + 1].current.dt < dato[j].current.dt) {
+            if (dato[j + 1].dt < dato[j].dt) {
                 auxiliar = dato[j];
                 dato[j] = dato[j + 1];
                 dato[j + 1] = auxiliar;
