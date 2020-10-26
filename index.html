@@ -46,9 +46,10 @@
     <section>
         <form autocomplete="off">
             <div class="autocomplete" style="width:300px;">
-                <input id="myInput" type="text" name="myCountry" placeholder="myCountry">
+                <input id="campoDeBusqueda" class="form-control mr-sm-2" type="text" name="myCountry"
+                    placeholder="Lugar">
             </div>
-            <button type="button" onclick="mostrar()">
+            <button class="btn btn-primary" type="button" onclick="ActualizarDatos()">Buscar</button>
         </form>
     </section>
     <!--Seccion Panel Actual-->
@@ -99,7 +100,7 @@
         crossorigin="anonymous"></script>
     <script type="module" src="JS/cities.js"></script>
     <script>
-        autocomplete(document.getElementById("myInput"));
+        autocomplete(document.getElementById("campoDeBusqueda"));
     </script>
 </body>
 

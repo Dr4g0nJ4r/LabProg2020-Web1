@@ -10,16 +10,8 @@ var longitud //longitud de la ciudad
 
 ////////////////////////////////////////////TEST/////////////////////////////////////////
 //busco en el json las coordenadas de la ciudad y actualizo las variables longitud y latitud. (Test)
-function buscarCoordenadas(lugar) {
 
-}
-
-function mostrar() {
-    let dato = document.getElementById("myInput").value
-    console.log(dato);
-}
-
-
+/*
 fetch('./JS/listaCiudadesArgentina.json')
     .then(response => response.json())
     .then(obj => {
@@ -27,12 +19,10 @@ fetch('./JS/listaCiudadesArgentina.json')
             if (obj[x].name == "Neuquén") {
                 this.latitud = obj[x].coord.lat;
                 this.longitud = obj[x].coord.lon;
-                ActualizarDatos("Neuquén", this.latitud, this.longitud); //Test
-                console.log("exito" + obj[x].name + obj[x].coord.lat + " " + obj[x].coord.lon)
-                console.log(obj[x]);
+                ActualizarDatosTest("Neuquén"); //Test
             }
         }
-    })
+    })*/
 //funcion test solo para poder mostrar por formato de fecha los pronosticos y los historicos
 function mostrarPorFecha(dato) {
     for (let x in dato) { console.log(tiempoDate(dato[x].dt)) }
@@ -42,13 +32,14 @@ function mostrarPorFecha(dato) {
 
 /////////////////////////////TEST////////////////////////////////////////
 
-
+function ActualizarDatosTest(ciudad) {
+    actualizarActual(ciudad);
+}
 
 /*Método por el cual la pagina se puede actualizar con los datos de la ciudad requerida */
-function ActualizarDatos(ciudad, lat, lon) {
+function ActualizarDatos() {
+    let ciudad = document.getElementById("campoDeBusqueda").value
     actualizarActual(ciudad);
-    actualizarPronostico(lat, lon);
-    actualizarHistorico(lat, lon);
 }
 
 
@@ -68,7 +59,8 @@ function actualizarActual(ciudad) {
             //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
             refrescarPanelPrincipal(data);
             tiempoDate(data.dt); //TEST
-
+            actualizarPronostico(data.coord.lat, data.coord.lon);
+            actualizarHistorico(data.coord.lat, data.coord.lon);
 
 
         })
@@ -81,7 +73,7 @@ function actualizarPronostico(lat, lon) {
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
         .then(Response => Response.json())
         .then(data => {
-
+            vaciarPronostico();
             setPronostico(data.daily);
             ordenarDatos(data.daily)
             console.log(this.pronostico);
@@ -94,6 +86,7 @@ function actualizarPronostico(lat, lon) {
 
 /*Función para obtener de la API los datos del clima histórico hasta 5 días antes de la fecha actual*/
 function actualizarHistorico(lat, lon) {
+    vaciarHistorico();
     this.llamadasHistorico(lat, lon).then(() => {
         this.ordenarDatos(this.historico);
         console.log(this.historico);
@@ -150,13 +143,21 @@ function setActual(datos) {
 }
 
 function setPronostico(datos) {
+
     this.pronostico = datos;
+}
+function vaciarPronostico() {
+    this.pronostico = [];
 }
 
 function setHistorico(datos) {
+
     this.historico.push(datos);
 
 
+}
+function vaciarHistorico() {
+    this.historico = [];
 }
 
 function getActual() {
