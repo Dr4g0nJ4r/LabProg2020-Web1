@@ -29,7 +29,7 @@ function mostrarPorFecha(dato) {
 
 }
 
-
+ActualizarDatosTest("Neuquén");
 /////////////////////////////TEST////////////////////////////////////////
 
 function ActualizarDatosTest(ciudad) {

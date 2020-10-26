@@ -19,7 +19,6 @@ function getCities() {
     fetch('./JS/listaCiudadesArgentina.json')
         .then(blob => blob.json())
         .then(data => {
-            console.log(data)
             setCities(data)
         })
         .catch(err => console.log(err));
