@@ -8,6 +8,9 @@
 
     <!-- Enlace al archivo clima.js -->
     <script src="JS/clima.js"></script>
+    <script src="JS/cities.js"></script>
+
+    <!-- buscador con autocompletado -->
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -41,7 +44,12 @@
     </nav>
     <!--Sección de Buscador-->
     <section>
-
+        <form autocomplete="off">
+            <div class="autocomplete" style="width:300px;">
+                <input id="myInput" type="text" name="myCountry" placeholder="myCountry">
+            </div>
+            <button type="button" onclick="mostrar()">
+        </form>
     </section>
     <!--Seccion Panel Actual-->
     <section>
@@ -90,6 +98,9 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
     <script type="module" src="JS/cities.js"></script>
+    <script>
+        autocomplete(document.getElementById("myInput"));
+    </script>
 </body>
 
 </html>

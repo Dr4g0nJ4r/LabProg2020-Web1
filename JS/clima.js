@@ -8,9 +8,17 @@ var pronostico // datos 7 días después..
 var latitud //latitud de la ciudad
 var longitud //longitud de la ciudad
 
-
 ////////////////////////////////////////////TEST/////////////////////////////////////////
 //busco en el json las coordenadas de la ciudad y actualizo las variables longitud y latitud. (Test)
+function buscarCoordenadas(lugar) {
+
+}
+
+function mostrar() {
+    let dato = document.getElementById("myInput").value
+    console.log(dato);
+}
+
 
 fetch('./JS/listaCiudadesArgentina.json')
     .then(response => response.json())
@@ -30,7 +38,6 @@ function mostrarPorFecha(dato) {
     for (let x in dato) { console.log(tiempoDate(dato[x].dt)) }
 
 }
-
 
 
 /////////////////////////////TEST////////////////////////////////////////
