@@ -25,11 +25,14 @@ fetch('./JS/listaCiudadesArgentina.json')
             }
         }
     })
-    //funcion test solo para poder mostrar por formato de fecha los pronosticos y los historicos
+//funcion test solo para poder mostrar por formato de fecha los pronosticos y los historicos
 function mostrarPorFecha(dato) {
     for (let x in dato) { console.log(tiempoDate(dato[x].dt)) }
 
 }
+
+
+
 /////////////////////////////TEST////////////////////////////////////////
 
 
