@@ -23,7 +23,7 @@ function getCities() {
         })
         .catch(err => console.log(err));
 }
-
+//extrae los nombres de las ciudades de Argentina
 function setCities(data) {
     for (x in data) { cities.push(data[x].name) }
 }
