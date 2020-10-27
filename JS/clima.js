@@ -160,6 +160,7 @@ function setPronostico(datos) {
 
     this.pronostico = datos;
 }
+
 function vaciarPronostico() {
     this.pronostico = [];
 }
@@ -170,6 +171,7 @@ function setHistorico(datos) {
 
 
 }
+
 function vaciarHistorico() {
     this.historico = [];
 }
@@ -187,19 +189,8 @@ function getHistorico() {
 }
 
 function refrescarPanelPrincipal(data) {
-    document.getElementById("valor_temperatura").innerHTML = `${data.main.temp} °C`;
-    document.getElementById("valor_presion").innerHTML = `${data.main.pressure} hP`;
-    document.getElementById("valor_humedad").innerHTML = `${data.main.humidity} %`;
-    let deg = data.wind.deg;
-    switch (deg) {
-        case deg < 180:
-            document.getElementById("logo_viento").src = `iconos/wind/001-down-arrow.png`;
-            break;
-
-        default:
-            document.getElementById("logo_viento").src = `iconos/002-wind.png`;
-            break;
-    }
-    document.getElementById("valor_viento").innerHTML = `${data.wind.speed} km/h`;
-
+    console.log(data);
+    document.getElementById("fechaActual").innerHTML = `${tiempoDate(data.dt)}`;
+    document.getElementById("nombreCiudad").innerHTML = `${data.name}, ${data.sys.country}`;
+    document.getElementById("iconoClima").src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
 }
