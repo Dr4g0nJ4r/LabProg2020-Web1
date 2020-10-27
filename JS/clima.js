@@ -190,7 +190,55 @@ function getHistorico() {
 
 function refrescarPanelPrincipal(data) {
     console.log(data);
+    //Panel ciudad y fecha
     document.getElementById("fechaActual").innerHTML = `${tiempoDate(data.dt)}`;
     document.getElementById("nombreCiudad").innerHTML = `${data.name}, ${data.sys.country}`;
     document.getElementById("iconoClima").src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    //Panel temperatura
+    document.getElementById("temperaturaActual").innerHTML = `${data.main.temp} °C`;
+    document.getElementById("temperaturaMaxima").innerHTML = `Máx: ${data.main.temp_max} °C`;
+    document.getElementById("temperaturaMinima").innerHTML = `Mín: ${data.main.temp_min} °C`;
+    document.getElementById("sensacionTermicaActual").innerHTML = `Sensación térmica ${data.main.feels_like} °C`;
+    //Panel viento
+    document.getElementById("vectorViento").innerHTML = `${velocidadViento(data.wind.speed)} km/H ${vectorViento(data.wind.deg)}`;
+    document.getElementById("iconoViento").src = `iconos/wind/${vectorViento(data.wind.deg)}.png`;
+}
+
+function vectorViento(degree) {
+    let vector;
+    console.log(degree);
+    console.log(Math.round(degree / 45));
+    switch (Math.round(degree / 45)) {
+        case 0:
+            vector = "N";
+            break;
+        case 1:
+            vector = "NE";
+            break;
+        case 2:
+            vector = "E";
+            break;
+        case 3:
+            vector = "SE";
+            break;
+        case 4:
+            vector = "S";
+            break;
+        case 5:
+            vector = "SO";
+            break;
+        case 6:
+            vector = "O";
+            break;
+        case 7:
+            vector = "NO";
+            break;
+        default:
+            break;
+    }
+    return vector;
+}
+
+function velocidadViento(speed) {
+    return Math.round(speed * 3.6);
 }
