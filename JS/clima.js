@@ -202,6 +202,12 @@ function refrescarPanelPrincipal(data) {
     //Panel viento
     document.getElementById("vectorViento").innerHTML = `${velocidadViento(data.wind.speed)} km/H ${vectorViento(data.wind.deg)}`;
     document.getElementById("iconoViento").src = `iconos/wind/${vectorViento(data.wind.deg)}.png`;
+    //Panel Humedad
+    document.getElementById("humedadActual").innerHTML = `Humedad: ${data.main.humidity} %`;
+    document.getElementById("presionActual").innerHTML = `Presión: ${data.main.pressure} hPa`;
+    //Panel Salida Sol-Puesta Sol
+    document.getElementById("tiempoSunrise").innerHTML = `${tiempoDate(data.sys.sunrise)}`;
+    document.getElementById("tiempoSunset").innerHTML = `${tiempoDate(data.sys.sunset)}`;
 }
 
 function vectorViento(degree) {
