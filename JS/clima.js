@@ -145,7 +145,7 @@ function llenarListaHistorial(dato) {
     var ul = document.getElementById("lista-Historial");
     for (x in dato) {
         let li = document.createElement("li");
-        //li.class("list-group-item");
+        li.className = "list-group-item";
         li.appendChild(document.createTextNode("Fecha: " + tiempoDate(dato[x].dt) + "Temperatura: " + dato[x].temp + "Sensación Térmica: " + dato[x].feels_like))
         ul.appendChild(li)
     }
