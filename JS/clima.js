@@ -90,6 +90,7 @@ function actualizarHistorico(lat, lon) {
     this.llamadasHistorico(lat, lon).then(() => {
         this.ordenarDatos(this.historico);
         console.log(this.historico);
+        llenarListaHistorial(this.historico)
         mostrarPorFecha(this.historico) //TEST
     })
 
@@ -104,6 +105,7 @@ function tiempoUnix(t) {
 function tiempoDate(t) {
     let fecha = new Date(t * 1000);
     console.log(fecha);
+    return fecha;
 }
 
 /*se realizan 5 llamadas a la API historico, uno por cada día antes de la fecha actual.
@@ -134,6 +136,18 @@ function ordenarDatos(dato) {
                 dato[j + 1] = auxiliar;
             }
         }
+    }
+}
+
+
+//Método para poder llenar la lista de historial
+function llenarListaHistorial(dato) {
+    var ul = document.getElementById("lista-Historial");
+    for (x in dato) {
+        let li = document.createElement("li");
+        //li.class("list-group-item");
+        li.appendChild(document.createTextNode("Fecha: " + tiempoDate(dato[x].dt) + "Temperatura: " + dato[x].temp + "Sensación Térmica: " + dato[x].feels_like))
+        ul.appendChild(li)
     }
 }
 
