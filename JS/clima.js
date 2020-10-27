@@ -194,6 +194,8 @@ function refrescarPanelPrincipal(data) {
     document.getElementById("fechaActual").innerHTML = `${tiempoDate(data.dt)}`;
     document.getElementById("nombreCiudad").innerHTML = `${data.name}, ${data.sys.country}`;
     document.getElementById("iconoClima").src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    document.getElementById("resumenClima").innerHTML = `${data.weather[0].main}`;
+    document.getElementById("descripcionClima").innerHTML = `${data.weather[0].description}`;
     //Panel temperatura
     document.getElementById("temperaturaActual").innerHTML = `${data.main.temp} °C`;
     document.getElementById("temperaturaMaxima").innerHTML = `Máx: ${data.main.temp_max} °C`;
