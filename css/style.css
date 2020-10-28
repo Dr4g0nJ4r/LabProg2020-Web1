@@ -1,3 +1,7 @@
+html {
+    font-size: 1rem;
+}
+
 .flex-container {
     display: flex;
     justify-content: center;
@@ -6,11 +10,8 @@
 
 .flex-container>div {
     background-color: #ffffff;
-    width: 30%;
-    margin: 10px 20px;
+    width: 100%;
     text-align: center;
-    line-height: 75px;
-    font-size: 30px;
 }
 
 
