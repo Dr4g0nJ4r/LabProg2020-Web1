@@ -9,10 +9,7 @@ var latitud = -38.95; //latitud de la ciudad de Neuquén
 var longitud = -68.06; //longitud de la ciudad de Neuquén
 var ciudadActual = "Neuquén";
 
-//función que ejecuta la pagina ppal para actualizar con los datos de neuquén, al ingreso de la pagina
-function ActualizarDatosCiudadActual() {
-    actualizarActual(this.ciudadActual);
-}
+
 
 /*Método por el cual la pagina se puede actualizar con los datos de la ciudad requerida */
 function ActualizarDatos(ciudad) {
@@ -34,7 +31,7 @@ function actualizarActual(ciudad) {
             this.latitud = data.coord.lat;
             this.longitud = data.coord.lon;
             actualizarPronostico(this.latitud, this.longitud)
-
+            actualizarHistorico(this.latitud, this.longitud)
             //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
             refrescarPanelPrincipal(data);
         })
@@ -58,10 +55,8 @@ function actualizarPronostico(lat, lon) {
 
 /*Función para obtener de la API los datos del clima histórico hasta 5 días antes de la fecha actual*/
 function actualizarHistorico(lat, lon) {
-    let ciudad = document.getElementById("campoDeBusqueda").value
-    this.ciudadActual = ciudad;
     vaciarHistorico();
-    this.llamadasHistorico(this.latitud, this.longitud).then(() => {
+    this.llamadasHistorico(lat, lon).then(() => {
         this.ordenarDatos(this.historico);
         llenarListaHistorial(this.historico)
         refrescarPanelHistorial(this.ciudadActual)
