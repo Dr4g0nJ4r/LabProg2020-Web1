@@ -104,7 +104,7 @@ function tiempoDate(t) {
 /*se realizan 5 llamadas a la API historico, uno por cada día antes de la fecha actual.
 Este es un método asincronico, espera todas las respuestas de la API, antes de devolerlos*/
 async function llamadasHistorico(lat, lon) {
-    for (i = 2; i <= 5; i++) {
+    for (i = 1; i <= 5; i++) {
         var respuesta = await fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + lat + "&lon=" + lon + "&dt=" + tiempoUnix(i) + "&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") //historico
             .then(Response => Response.json())
             .then(data => {
@@ -138,9 +138,10 @@ function llenarListaHistorial(dato) {
     for (x in dato) {
         let li = document.createElement("li");
         var fecha = tiempoDate(dato[x].dt);
-        var dia = fecha.getUTCDay();
-        var mes = fecha.getUTCMonth();
-        var año = fecha.getUTCFullYear();
+        console.log(tiempoDate(dato[x].dt));
+        var dia = fecha.getDate();
+        var mes = fecha.getMonth();
+        var año = fecha.getFullYear();
         li.className = "list-group-item";
         li.appendChild(document.createTextNode(dia + "/" + mes + "/" + año + "|" + "Temperatura: " + dato[x].temp + "Sensación Térmica: " + dato[x].feels_like))
         ul.appendChild(li)
