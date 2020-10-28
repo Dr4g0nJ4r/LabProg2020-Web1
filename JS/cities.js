@@ -14,8 +14,6 @@ function setCities(data) {
     for (x in data) { cities.push(data[x].name) }
 }
 
-/////////////////////TEST//////////////////////////
-
 function autocomplete(inp) {
     var arr = this.cities;
     var currentFocus;

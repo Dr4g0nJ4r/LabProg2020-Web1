@@ -8,10 +8,7 @@ var pronostico // datos 7 días después..
 var latitud = -38.95;//latitud de la ciudad de Neuquén
 var longitud = -68.06;//longitud de la ciudad de Neuquén
 var ciudadActual = "Neuquén";
-////////////////////////////////////////////TEST/////////////////////////////////////////
 
-
-/////////////////////////////TEST////////////////////////////////////////
 
 function ActualizarDatosCiudadActual() {
     actualizarActual(this.ciudadActual);
@@ -236,4 +233,8 @@ function vectorViento(degree) {
 
 function velocidadViento(speed) {
     return Math.round(speed * 3.6);
+}
+
+function refrescarPanelHistorial(data) {
+
 }
