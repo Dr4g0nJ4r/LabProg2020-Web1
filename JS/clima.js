@@ -5,43 +5,24 @@
 var historico = []; // 5 días antes...
 var actual // datos actuales del clima
 var pronostico // datos 7 días después..
-var latitud //latitud de la ciudad
-var longitud //longitud de la ciudad
-
+var latitud = -38.95;//latitud de la ciudad de Neuquén
+var longitud = -68.06;//longitud de la ciudad de Neuquén
+var ciudadActual = "Neuquén";
 ////////////////////////////////////////////TEST/////////////////////////////////////////
-//busco en el json las coordenadas de la ciudad y actualizo las variables longitud y latitud. (Test)
 
-/*
-fetch('./JS/listaCiudadesArgentina.json')
-    .then(response => response.json())
-    .then(obj => {
-        for (x = 0; x <= obj.length; x++) {
-            if (obj[x].name == "Neuquén") {
-                this.latitud = obj[x].coord.lat;
-                this.longitud = obj[x].coord.lon;
-                ActualizarDatosTest("Neuquén"); //Test
-            }
-        }
-    })
-//funcion test solo para poder mostrar por formato de fecha los pronosticos y los historicos
-function mostrarPorFecha(dato) {
-    for (let x in dato) { console.log(tiempoDate(dato[x].dt)) }
 
-}
-*/
-ActualizarDatosTest("Neuquén");
 /////////////////////////////TEST////////////////////////////////////////
 
-function ActualizarDatosTest(ciudad) {
-    actualizarActual(ciudad);
+function ActualizarDatosCiudadActual() {
+    actualizarActual(this.ciudadActual);
 }
 
 /*Método por el cual la pagina se puede actualizar con los datos de la ciudad requerida */
 function ActualizarDatos() {
     let ciudad = document.getElementById("campoDeBusqueda").value
+    this.ciudadActual = ciudad;
     actualizarActual(ciudad);
 }
-
 
 
 
@@ -54,21 +35,19 @@ function actualizarActual(ciudad) {
         .then(Response => Response.json())
         .then(data => {
             setActual(data);
+            this.latitud = data.coord.lat;
+            this.longitud = data.coord.lon;
 
             //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
             refrescarPanelPrincipal(data);
-            actualizarPronostico(data.coord.lat, data.coord.lon);
-            actualizarHistorico(data.coord.lat, data.coord.lon);
-
-
         })
         .catch(err => console.log(err));
 
 }
 /*Funcion que me sirve para realizar un llamado a la API y pedir los datos del pronostico climático de los
 próximos 7 días*/
-function actualizarPronostico(lat, lon) {
-    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
+function actualizarPronostico() {
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + this.latitud + "&lon=" + this.longitud + "&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
         .then(Response => Response.json())
         .then(data => {
             vaciarPronostico();
@@ -81,9 +60,9 @@ function actualizarPronostico(lat, lon) {
 
 
 /*Función para obtener de la API los datos del clima histórico hasta 5 días antes de la fecha actual*/
-function actualizarHistorico(lat, lon) {
+function actualizarHistorico() {
     vaciarHistorico();
-    this.llamadasHistorico(lat, lon).then(() => {
+    this.llamadasHistorico(this.latitud, this.longitud).then(() => {
         this.ordenarDatos(this.historico);
         llenarListaHistorial(this.historico)
     })
@@ -99,6 +78,22 @@ function tiempoUnix(t) {
 function tiempoDate(t) {
     let fecha = new Date(t * 1000);
     return fecha;
+}
+//método para obtener fecha en formato DD/MM/AAAA
+function obtenerFecha(t) {
+    var fecha = tiempoDate(t);
+    var dia = fecha.getDate();
+    var mes = fecha.getMonth();
+    var año = fecha.getFullYear();
+    return (dia + "/" + mes + "/" + año);
+}
+//método para obtener la hora en formato HH/MM/SS
+function obtenerHora(t) {
+    var fecha = tiempoDate(t);
+    var hora = fecha.getHours();
+    var min = fecha.getMinutes();
+    var seg = fecha.getSeconds();
+    return (hora + ":" + min + ":" + seg);
 }
 
 /*se realizan 5 llamadas a la API historico, uno por cada día antes de la fecha actual.
@@ -137,13 +132,8 @@ function llenarListaHistorial(dato) {
     ul.innerHTML = '';//se asegura que no tenga contenido antes de agregar más items de la lista.
     for (x in dato) {
         let li = document.createElement("li");
-        var fecha = tiempoDate(dato[x].dt);
-        console.log(tiempoDate(dato[x].dt));
-        var dia = fecha.getDate();
-        var mes = fecha.getMonth();
-        var año = fecha.getFullYear();
         li.className = "list-group-item";
-        li.appendChild(document.createTextNode(dia + "/" + mes + "/" + año + "|" + "Temperatura: " + dato[x].temp + "Sensación Térmica: " + dato[x].feels_like))
+        li.appendChild(document.createTextNode(obtenerFecha(dato[x].dt) + "|" + "Temperatura: " + dato[x].temp + "Sensación Térmica: " + dato[x].feels_like))
         ul.appendChild(li)
     }
 }
@@ -188,7 +178,7 @@ function getHistorico() {
 function refrescarPanelPrincipal(data) {
     console.log(data);
     //Panel ciudad y fecha
-    document.getElementById("fechaActual").innerHTML = `${tiempoDate(data.dt)}`;
+    document.getElementById("fechaActual").innerHTML = `${obtenerFecha(data.dt)}`;
     document.getElementById("nombreCiudad").innerHTML = `${data.name}, ${data.sys.country}`;
     document.getElementById("iconoClima").src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     document.getElementById("resumenClima").innerHTML = `${data.weather[0].main}`;
@@ -205,8 +195,8 @@ function refrescarPanelPrincipal(data) {
     document.getElementById("humedadActual").innerHTML = `Humedad: ${data.main.humidity} %`;
     document.getElementById("presionActual").innerHTML = `Presión: ${data.main.pressure} hPa`;
     //Panel Salida Sol-Puesta Sol
-    document.getElementById("tiempoSunrise").innerHTML = `${tiempoDate(data.sys.sunrise)}`;
-    document.getElementById("tiempoSunset").innerHTML = `${tiempoDate(data.sys.sunset)}`;
+    document.getElementById("tiempoSunrise").innerHTML = `${obtenerHora(data.sys.sunrise)}`;
+    document.getElementById("tiempoSunset").innerHTML = `${obtenerHora(data.sys.sunset)}`;
 }
 
 function vectorViento(degree) {
