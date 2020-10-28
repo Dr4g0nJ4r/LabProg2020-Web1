@@ -22,13 +22,13 @@ fetch('./JS/listaCiudadesArgentina.json')
                 ActualizarDatosTest("Neuquén"); //Test
             }
         }
-    })*/
+    })
 //funcion test solo para poder mostrar por formato de fecha los pronosticos y los historicos
 function mostrarPorFecha(dato) {
     for (let x in dato) { console.log(tiempoDate(dato[x].dt)) }
 
 }
-
+*/
 ActualizarDatosTest("Neuquén");
 /////////////////////////////TEST////////////////////////////////////////
 
@@ -53,12 +53,10 @@ function actualizarActual(ciudad) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf`)
         .then(Response => Response.json())
         .then(data => {
-            console.log(data);
             setActual(data);
 
             //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
             refrescarPanelPrincipal(data);
-            tiempoDate(data.dt); //TEST
             actualizarPronostico(data.coord.lat, data.coord.lon);
             actualizarHistorico(data.coord.lat, data.coord.lon);
 
@@ -76,8 +74,6 @@ function actualizarPronostico(lat, lon) {
             vaciarPronostico();
             setPronostico(data.daily);
             ordenarDatos(data.daily)
-            console.log(this.pronostico);
-            mostrarPorFecha(this.pronostico); //Test
         })
         .catch(err => console.log(err))
 
@@ -89,9 +85,7 @@ function actualizarHistorico(lat, lon) {
     vaciarHistorico();
     this.llamadasHistorico(lat, lon).then(() => {
         this.ordenarDatos(this.historico);
-        console.log(this.historico);
         llenarListaHistorial(this.historico)
-        mostrarPorFecha(this.historico) //TEST
     })
 
 }
@@ -104,18 +98,16 @@ function tiempoUnix(t) {
 //método por el cual se puede obtener la fecha a partir de un tiempo Unix..
 function tiempoDate(t) {
     let fecha = new Date(t * 1000);
-    console.log(fecha);
     return fecha;
 }
 
 /*se realizan 5 llamadas a la API historico, uno por cada día antes de la fecha actual.
 Este es un método asincronico, espera todas las respuestas de la API, antes de devolerlos*/
 async function llamadasHistorico(lat, lon) {
-    for (i = 1; i <= 5; i++) {
+    for (i = 2; i <= 5; i++) {
         var respuesta = await fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + lat + "&lon=" + lon + "&dt=" + tiempoUnix(i) + "&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") //historico
             .then(Response => Response.json())
             .then(data => {
-                console.log(data);
                 setHistorico(data.current)
             })
     }
@@ -125,7 +117,6 @@ async function llamadasHistorico(lat, lon) {
 
 //método que ordena por fecha los datos let pronostico y el historico
 function ordenarDatos(dato) {
-    console.log("ordenar pronostico");
     var auxiliar;
     var i, j;
     for (i = 1; i <= dato.length - 1; i++) {
@@ -143,6 +134,7 @@ function ordenarDatos(dato) {
 //Método para poder llenar la lista de historial
 function llenarListaHistorial(dato) {
     var ul = document.getElementById("lista-Historial");
+    ul.innerHTML = '';//se asegura que no tenga contenido antes de agregar más items de la lista.
     for (x in dato) {
         let li = document.createElement("li");
         var fecha = tiempoDate(dato[x].dt);
