@@ -5,8 +5,8 @@
 var historico = []; // 5 días antes...
 var actual // datos actuales del clima
 var pronostico // datos 7 días después..
-var latitud = -38.95;//latitud de la ciudad de Neuquén
-var longitud = -68.06;//longitud de la ciudad de Neuquén
+var latitud = -38.95; //latitud de la ciudad de Neuquén
+var longitud = -68.06; //longitud de la ciudad de Neuquén
 var ciudadActual = "Neuquén";
 
 //función que ejecuta la pagina ppal para actualizar con los datos de neuquén, al ingreso de la pagina
@@ -129,7 +129,7 @@ function ordenarDatos(dato) {
 //Método para poder llenar la lista de historial
 function llenarListaHistorial(dato) {
     var ul = document.getElementById("lista-Historial");
-    ul.innerHTML = '';//se asegura que no tenga contenido antes de agregar más items de la lista.
+    ul.innerHTML = ''; //se asegura que no tenga contenido antes de agregar más items de la lista.
     for (x in dato) {
         let li = document.createElement("li");
         li.className = "list-group-item";
@@ -178,7 +178,7 @@ function getHistorico() {
 function refrescarPanelPrincipal(data) {
     console.log(data);
     //Panel ciudad y fecha
-    document.getElementById("fechaActual").innerHTML = `${obtenerFecha(data.dt)}`;
+    document.getElementById("fechaActual").innerHTML = `<h1 style="font-type:bold;">${obtenerFecha(data.dt)}</h1>`;
     document.getElementById("nombreCiudad").innerHTML = `${data.name}, ${data.sys.country}`;
     document.getElementById("iconoClima").src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     document.getElementById("resumenClima").innerHTML = `${data.weather[0].main}`;
