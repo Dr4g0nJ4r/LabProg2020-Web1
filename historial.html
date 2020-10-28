@@ -47,7 +47,7 @@
             <div class="autocomplete" style="width:300px;">
                 <input id="campoDeBusqueda" class="form-control mr-sm-2" type="text" name="lugar" placeholder="Lugar">
             </div>
-            <button class="btn btn-primary" type="button" onclick="ActualizarDatos()">Buscar</button>
+            <button class="btn btn-primary" type="button" onclick="actualizarHistorico()">Buscar</button>
         </form>
     </section>
     <!--Sección de la Lista del Historial-->
@@ -75,7 +75,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-    <script>actualizarHistorico()</script>
+    <script>actualizarHistorico(); autocomplete(document.getElementById("campoDeBusqueda"));</script>
 
 </body>
 
