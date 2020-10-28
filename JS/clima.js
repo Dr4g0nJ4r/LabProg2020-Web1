@@ -34,6 +34,7 @@ function actualizarActual(ciudad) {
             setActual(data);
             this.latitud = data.coord.lat;
             this.longitud = data.coord.lon;
+            actualizarPronostico(this.latitud, this.longitud)
 
             //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
             refrescarPanelPrincipal(data);
@@ -43,8 +44,8 @@ function actualizarActual(ciudad) {
 }
 /*Funcion que me sirve para realizar un llamado a la API y pedir los datos del pronostico climático de los
 próximos 7 días*/
-function actualizarPronostico() {
-    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + this.latitud + "&lon=" + this.longitud + "&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
+function actualizarPronostico(lat, lon) {
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
         .then(Response => Response.json())
         .then(data => {
             vaciarPronostico();
