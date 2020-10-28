@@ -58,10 +58,13 @@ function actualizarPronostico() {
 
 /*Función para obtener de la API los datos del clima histórico hasta 5 días antes de la fecha actual*/
 function actualizarHistorico() {
+    let ciudad = document.getElementById("campoDeBusqueda").value
+    this.ciudadActual = ciudad;
     vaciarHistorico();
     this.llamadasHistorico(this.latitud, this.longitud).then(() => {
         this.ordenarDatos(this.historico);
         llenarListaHistorial(this.historico)
+        refrescarPanelHistorial(this.ciudadActual)
     })
 
 }
@@ -236,5 +239,5 @@ function velocidadViento(speed) {
 }
 
 function refrescarPanelHistorial(data) {
-
+    document.getElementById("ciudad").innerHTML = data;
 }
