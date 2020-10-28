@@ -15,8 +15,7 @@ function ActualizarDatosCiudadActual() {
 }
 
 /*Método por el cual la pagina se puede actualizar con los datos de la ciudad requerida */
-function ActualizarDatos() {
-    let ciudad = document.getElementById("campoDeBusqueda").value
+function ActualizarDatos(ciudad) {
     this.ciudadActual = ciudad;
     actualizarActual(ciudad);
 }
@@ -58,7 +57,7 @@ function actualizarPronostico(lat, lon) {
 
 
 /*Función para obtener de la API los datos del clima histórico hasta 5 días antes de la fecha actual*/
-function actualizarHistorico() {
+function actualizarHistorico(lat, lon) {
     let ciudad = document.getElementById("campoDeBusqueda").value
     this.ciudadActual = ciudad;
     vaciarHistorico();
