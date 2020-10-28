@@ -58,7 +58,6 @@ function actualizarPronostico(lat, lon) {
 
 /*Función para obtener de la API los datos del clima histórico hasta 5 días antes de la fecha actual*/
 function actualizarHistorico(lat, lon) {
-    this.ciudadActual = ciudad;
     vaciarHistorico();
     this.llamadasHistorico(lat, lon).then(() => {
         this.ordenarDatos(this.historico);
