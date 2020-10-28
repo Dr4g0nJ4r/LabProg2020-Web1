@@ -3,6 +3,10 @@
 
 <head>
     <!-- Required meta tags -->
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+    <meta http-equiv="Pragma" content="no-cache">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -13,8 +17,7 @@
     <!-- buscador con autocompletado -->
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     <!-- style.css personalizado -->
     <link rel="stylesheet" href="css/style.css">
@@ -25,8 +28,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="./index.html">CLIMA</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -45,13 +47,14 @@
     </nav>
     <!--Sección de Buscador-->
     <section>
-        <form autocomplete="off">
-            <div class="autocomplete" style="width:300px;">
-                <input id="campoDeBusqueda" class="form-control mr-sm-2" type="text" name="lugar" placeholder="Lugar">
-            </div>
-            <button class="btn btn-primary" type="button"
-                onclick="ActualizarDatos(document.getElementById('campoDeBusqueda').value)">Buscar</button>
-        </form>
+        <div id="buscador">
+            <form autocomplete="off">
+                <div class="autocomplete" style="width:300px;">
+                    <input id="campoDeBusqueda" class="form-control mr-sm-2" type="text" name="lugar" placeholder="Lugar">
+                </div>
+                <button class="btn btn-primary" type="button" onclick="ActualizarDatos(document.getElementById('campoDeBusqueda').value)">Buscar</button>
+            </form>
+        </div>
     </section>
     <!--Seccion Panel Actual-->
     <section>
@@ -65,7 +68,7 @@
             <div class="container">
                 <div class="container">
                     <h3 id="resumenClima"></h3>
-                    <img src="http://openweathermap.org/img/wn/10d@2x.png" class="img-fluid" alt="" id="iconoClima">
+                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="" id="iconoClima">
                     <h4 id="descripcionClima"></h4>
                 </div>
 
@@ -75,7 +78,7 @@
             <div class="container">
                 <div class="flex-container">
                     <div class="container">
-                        <img src="iconos/001-thermometer-1.png" alt="iconoTermómetro" class="img-fluid">
+                        <img src="iconos/001-thermometer-1.png" alt="iconoTermómetro">
                     </div>
                     <div class="container">
                         <h3 id="temperaturaActual"></h3>
@@ -90,7 +93,7 @@
             <div class="container">
                 <div class="flex-container">
                     <div class="container">
-                        <img src="" alt="" id="iconoViento" class="img-fluid ">
+                        <img src="" alt="" id="iconoViento">
                     </div>
                     <div class="container">
                         <h3 id="vectorViento"></h3>
@@ -100,7 +103,7 @@
             <div class="container">
                 <div class="flex-container">
                     <div class="container">
-                        <img src="iconos/003-humidity.png" alt="iconoHumedad" class="img-fluid">
+                        <img src="iconos/003-humidity.png" alt="iconoHumedad">
                     </div>
                     <div class="container">
                         <h4 id="humedadActual"></h4>
@@ -111,7 +114,7 @@
             <div class="container">
                 <div class="flex-container">
                     <div class="container">
-                        <img src="iconos/023-sunrise.png" alt="iconoSunrise" class="img-fluid">
+                        <img src="iconos/023-sunrise.png" alt="iconoSunrise">
                     </div>
                     <div class="container">
                         <h4 id="tiempoSunrise"></h4>
@@ -119,7 +122,7 @@
                 </div>
                 <div class="flex-container">
                     <div class="container">
-                        <img src="iconos/030-sunset.png" alt="iconoSunset" class="img-fluid">
+                        <img src="iconos/030-sunset.png" alt="iconoSunset">
                     </div>
                     <div class="container">
                         <h4 id="tiempoSunset"></h4>
@@ -135,17 +138,17 @@
 
     <!--Sección Footer-->
     <section>
-
+        <footer>
+            <div>
+                <p>Desarrollado por Ulises Jaramillo y Luis Keller</p>
+            </div>
+        </footer>
     </section>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script type="module" src="JS/cities.js"></script>
     <script>
         ActualizarDatosCiudadActual();

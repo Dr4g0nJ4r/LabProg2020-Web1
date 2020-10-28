@@ -2,19 +2,6 @@ html {
     font-size: 1rem;
 }
 
-.flex-container {
-    display: flex;
-    justify-content: center;
-    background-color: DodgerBlue;
-}
-
-.flex-container>div {
-    background-color: #ffffff;
-    width: 100%;
-    text-align: center;
-    height: 200px;
-}
-
 
 /*css del autocompletado!*/
 
@@ -60,7 +47,47 @@ body {
     color: #ffffff;
 }
 
-.flex-container>div>h4 {
-    color: #bbdf1e;
-    font-size: 10px;
+h4 {
+    color: #034738;
+    font-size: x-small;
+}
+
+h3 {
+    color: #eeb902;
+    font-size: large;
+}
+
+footer {
+    padding-top: 10px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #007bff;
+    color: #b4edd2;
+    text-align: center;
+}
+
+#buscador {
+    position: relative;
+    background-color: #034748;
+    text-align: right;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-container>div {
+    width: 100%;
+    text-align: center;
+    height: 100px;
+    margin-top: 10px;
+    background-color: #b4edd2;
+    margin: 0px 10px;
+}
+
+.container>img {
+    width: 50px;
 }

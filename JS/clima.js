@@ -178,7 +178,7 @@ function getHistorico() {
 function refrescarPanelPrincipal(data) {
     console.log(data);
     //Panel ciudad y fecha
-    document.getElementById("fechaActual").innerHTML = `<h1 style="font-type:bold;">${obtenerFecha(data.dt)}</h1>`;
+    document.getElementById("fechaActual").innerHTML = `${obtenerFecha(data.dt)}`;
     document.getElementById("nombreCiudad").innerHTML = `${data.name}, ${data.sys.country}`;
     document.getElementById("iconoClima").src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     document.getElementById("resumenClima").innerHTML = `${data.weather[0].main}`;
