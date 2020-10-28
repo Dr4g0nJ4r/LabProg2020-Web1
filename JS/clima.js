@@ -9,7 +9,7 @@ var latitud = -38.95;//latitud de la ciudad de Neuquén
 var longitud = -68.06;//longitud de la ciudad de Neuquén
 var ciudadActual = "Neuquén";
 
-
+//función que ejecuta la pagina ppal para actualizar con los datos de neuquén, al ingreso de la pagina
 function ActualizarDatosCiudadActual() {
     actualizarActual(this.ciudadActual);
 }
