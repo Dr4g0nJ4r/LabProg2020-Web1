@@ -34,7 +34,7 @@ function actualizarActual(ciudad) {
             this.latitud = data.coord.lat;
             this.longitud = data.coord.lon;
             actualizarPronostico(this.latitud, this.longitud)
-
+            actualizarHistorico(this.latitud, this.longitud)
             //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
             refrescarPanelPrincipal(data);
         })
@@ -58,10 +58,9 @@ function actualizarPronostico(lat, lon) {
 
 /*Función para obtener de la API los datos del clima histórico hasta 5 días antes de la fecha actual*/
 function actualizarHistorico(lat, lon) {
-    let ciudad = document.getElementById("campoDeBusqueda").value
     this.ciudadActual = ciudad;
     vaciarHistorico();
-    this.llamadasHistorico(this.latitud, this.longitud).then(() => {
+    this.llamadasHistorico(lat, lon).then(() => {
         this.ordenarDatos(this.historico);
         llenarListaHistorial(this.historico)
         refrescarPanelHistorial(this.ciudadActual)
