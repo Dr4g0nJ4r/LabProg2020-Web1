@@ -11,6 +11,7 @@ html {
 
 body {
     font: 16px Arial;
+    padding-bottom: 70px;
 }
 
 .autocomplete {
@@ -58,15 +59,11 @@ h3 {
     font-weight: bolder;
 }
 
-#panelPronostico {
-    margin-bottom: 100px;
-}
-
 footer {
     padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 0px;
-    position: relative;
+    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
