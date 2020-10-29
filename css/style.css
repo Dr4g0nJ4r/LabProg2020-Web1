@@ -48,13 +48,14 @@ body {
 }
 
 h4 {
-    color: #034738;
-    font-size: x-small;
+    color: #3A3335;
+    font-size: small;
 }
 
 h3 {
-    color: #eeb902;
-    font-size: large;
+    color: #3A3335;
+    font-size: x-large;
+    font-weight: bolder;
 }
 
 footer {
@@ -117,4 +118,9 @@ footer {
 #fechaActual {
     font-size: large;
     font-weight: 200;
+}
+
+.btn-group {
+    text-align: center;
+    align-content: center;
 }

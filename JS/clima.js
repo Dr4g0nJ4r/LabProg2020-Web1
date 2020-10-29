@@ -32,7 +32,7 @@ function actualizarActual(ciudad) {
             this.longitud = data.coord.lon;
             actualizarPronostico(this.latitud, this.longitud)
             actualizarHistorico(this.latitud, this.longitud)
-            //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
+                //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
             refrescarPanelPrincipal(data);
         })
         .catch(err => console.log(err));
@@ -46,7 +46,8 @@ function actualizarPronostico(lat, lon) {
         .then(data => {
             vaciarPronostico();
             setPronostico(data.daily);
-            ordenarDatos(data.daily)
+            ordenarDatos(data.daily);
+            refrescarPanelPronostico();
         })
         .catch(err => console.log(err))
 
@@ -78,9 +79,16 @@ function tiempoDate(t) {
 function obtenerFecha(t) {
     var fecha = tiempoDate(t);
     var dia = fecha.getDate();
-    var mes = fecha.getMonth();
+    var mes = fecha.getMonth() + 1;
     var año = fecha.getFullYear();
     return (dia + "/" + mes + "/" + año);
+}
+
+function obtenerFechaSinAnio(t) {
+    var fecha = tiempoDate(t);
+    var dia = fecha.getDate();
+    var mes = fecha.getMonth() + 1;
+    return (dia + "/" + mes);
 }
 //método para obtener la hora en formato HH/MM/SS
 function obtenerHora(t) {
@@ -170,29 +178,7 @@ function getHistorico() {
     return this.historico;
 }
 
-function refrescarPanelPrincipal(data) {
-    console.log(data);
-    //Panel ciudad y fecha
-    document.getElementById("fechaActual").innerHTML = `${obtenerFecha(data.dt)}`;
-    document.getElementById("nombreCiudad").innerHTML = `${data.name}, ${data.sys.country}`;
-    document.getElementById("iconoClima").src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-    document.getElementById("resumenClima").innerHTML = `${data.weather[0].main}`;
-    document.getElementById("descripcionClima").innerHTML = `${data.weather[0].description}`;
-    //Panel temperatura
-    document.getElementById("temperaturaActual").innerHTML = `${data.main.temp} °C`;
-    document.getElementById("temperaturaMaxima").innerHTML = `Máx: ${data.main.temp_max} °C`;
-    document.getElementById("temperaturaMinima").innerHTML = `Mín: ${data.main.temp_min} °C`;
-    document.getElementById("sensacionTermicaActual").innerHTML = `Sensación térmica ${data.main.feels_like} °C`;
-    //Panel viento
-    document.getElementById("vectorViento").innerHTML = `${velocidadViento(data.wind.speed)} km/H ${vectorViento(data.wind.deg)}`;
-    document.getElementById("iconoViento").src = `iconos/wind/${vectorViento(data.wind.deg)}.png`;
-    //Panel Humedad
-    document.getElementById("humedadActual").innerHTML = `Humedad: ${data.main.humidity} %`;
-    document.getElementById("presionActual").innerHTML = `Presión: ${data.main.pressure} hPa`;
-    //Panel Salida Sol-Puesta Sol
-    document.getElementById("tiempoSunrise").innerHTML = `${obtenerHora(data.sys.sunrise)}`;
-    document.getElementById("tiempoSunset").innerHTML = `${obtenerHora(data.sys.sunset)}`;
-}
+
 
 function vectorViento(degree) {
     let vector;
@@ -231,6 +217,62 @@ function vectorViento(degree) {
 
 function velocidadViento(speed) {
     return Math.round(speed * 3.6);
+}
+
+function refrescarPanelPrincipal(data) {
+    console.log(data);
+    //Panel ciudad y fecha
+    document.getElementById("fechaActual").innerHTML = `Hoy ${obtenerFecha(data.dt)}`;
+    document.getElementById("nombreCiudad").innerHTML = `${data.name}, ${data.sys.country}`;
+    document.getElementById("iconoClima").src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    document.getElementById("resumenClima").innerHTML = `${data.weather[0].main}`;
+    document.getElementById("descripcionClima").innerHTML = `${data.weather[0].description}`;
+    //Panel temperatura
+    document.getElementById("temperaturaActual").innerHTML = `${data.main.temp} °C`;
+    document.getElementById("temperaturaMaxima").innerHTML = `Máx: ${data.main.temp_max} °C`;
+    document.getElementById("temperaturaMinima").innerHTML = `Mín: ${data.main.temp_min} °C`;
+    document.getElementById("sensacionTermicaActual").innerHTML = `Sensación térmica ${data.main.feels_like} °C`;
+    //Panel viento
+    document.getElementById("vectorViento").innerHTML = `${velocidadViento(data.wind.speed)} km/H ${vectorViento(data.wind.deg)}`;
+    document.getElementById("iconoViento").src = `iconos/wind/${vectorViento(data.wind.deg)}.png`;
+    //Panel Humedad
+    document.getElementById("humedadActual").innerHTML = `Humedad: ${data.main.humidity} %`;
+    document.getElementById("presionActual").innerHTML = `Presión: ${data.main.pressure} hPa`;
+    //Panel Salida Sol-Puesta Sol
+    document.getElementById("tiempoSunrise").innerHTML = `${obtenerHora(data.sys.sunrise)}`;
+    document.getElementById("tiempoSunset").innerHTML = `${obtenerHora(data.sys.sunset)}`;
+}
+
+function refrescarPanelPronostico() {
+    var btnGroup = document.getElementById("btn-group-pronostico");
+    btnGroup.innerHTML = '';
+    saltoPrimerDia = true;
+    for (x in pronostico) {
+        let btn = document.createElement("button");
+        btn.value = obtenerFechaSinAnio(pronostico[x].dt);
+        btn.className = "btn btn-secondary";
+        //btn.addEventListener("onclick", function() { obtenerFechaSinAnio(btn.value) }, false)
+        btn.textContent = obtenerFechaSinAnio(pronostico[x].dt);
+        btn.onclick = function() { refrescarDatosPronostico(this.value) };
+        btnGroup.appendChild(btn);
+    }
+    refrescarDatosPronostico(obtenerFechaSinAnio(pronostico[1].dt));
+
+}
+
+function refrescarDatosPronostico(fecha) {
+    console.log(fecha);
+    for (x in pronostico) {
+        if (obtenerFechaSinAnio(pronostico[x].dt) == fecha) {
+            document.getElementById("logoPronostico").src = `http://openweathermap.org/img/wn/${pronostico[x].weather[0].icon}@2x.png`;
+            document.getElementById("descripcionPronostico").innerHTML = `${pronostico[x].weather[0].description}`;
+            document.getElementById("tempPronostico").innerHTML = `Temperatura: ${pronostico[x].temp.day}`;
+            document.getElementById("vientoPronostico").innerHTML = `Viento: ${velocidadViento(pronostico[x].wind_speed)} ${vectorViento(pronostico[x].wind_deg)}`;
+            document.getElementById("humedadPronostico").innerHTML = `Humedad: ${pronostico[x].humidity}%`;
+
+
+        }
+    }
 }
 
 function refrescarPanelHistorial(data) {
