@@ -79,15 +79,42 @@ footer {
     justify-content: center;
 }
 
+.panel {
+    background-color: #eef4ed;
+}
+
 .flex-container>div {
     width: 100%;
     text-align: center;
-    height: 100px;
-    margin-top: 10px;
-    background-color: #b4edd2;
-    margin: 0px 10px;
+    padding: 1px;
+    justify-content: center;
 }
+
+.container {}
 
 .container>img {
     width: 50px;
+    padding: 0px;
+}
+
+.container>h3 {
+    font-weight: bolder;
+    text-align: center;
+    color: #3a3335;
+}
+
+.container>h4 {
+    font-weight: lighter;
+    text-align: center;
+    color: #3a3335;
+}
+
+#nombreCiudad {
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+#fechaActual {
+    font-size: large;
+    font-weight: 200;
 }

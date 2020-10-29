@@ -46,36 +46,32 @@
         </div>
     </nav>
     <!--Sección de Buscador-->
-    <section>
-        <div id="buscador">
-            <form autocomplete="off">
-                <div class="autocomplete" style="width:300px;">
-                    <input id="campoDeBusqueda" class="form-control mr-sm-2" type="text" name="lugar" placeholder="Lugar">
-                </div>
-                <button class="btn btn-primary" type="button" onclick="ActualizarDatos(document.getElementById('campoDeBusqueda').value)">Buscar</button>
-            </form>
-        </div>
-    </section>
-    <!--Seccion Panel Actual-->
-    <section>
-        <div class="flex-container">
-            <div class="container">
-                <div class="container">
-                    <h4 id="fechaActual"></h4>
-                    <h3 id="nombreCiudad"></h3>
-                </div>
+    <div id="buscador">
+        <form autocomplete="off">
+            <div class="autocomplete" style="width:300px;">
+                <input id="campoDeBusqueda" class="form-control mr-sm-2" type="text" name="lugar" placeholder="Lugar">
             </div>
-            <div class="container">
-                <div class="container">
-                    <h3 id="resumenClima"></h3>
-                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="" id="iconoClima">
-                    <h4 id="descripcionClima"></h4>
-                </div>
+            <button class="btn btn-primary" type="button" onclick="ActualizarDatos(document.getElementById('campoDeBusqueda').value)">Buscar</button>
+        </form>
+    </div>
+    <!--Seccion Panel Actual-->
+    <section id="panelCiudadFecha">
+        <div class="flex-container">
+            <div class="container panel">
+                <h4 id="fechaActual"></h4>
+                <h3 id="nombreCiudad"></h3>
+            </div>
+            <div class="container panel">
+                <h3 id="resumenClima"></h3>
+                <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="" id="iconoClima">
+                <h4 id="descripcionClima"></h4>
 
             </div>
         </div>
+    </section>
+    <section id="panelDatosActual">
         <div class="flex-container">
-            <div class="container">
+            <div class="container panel">
                 <div class="flex-container">
                     <div class="container">
                         <img src="iconos/001-thermometer-1.png" alt="iconoTermómetro">
@@ -86,11 +82,11 @@
                     <div class="container">
                         <h4 id="temperaturaMaxima"></h4>
                         <h4 id="temperaturaMinima"></h4>
+                        <h4 id="sensacionTermicaActual"></h4>
                     </div>
                 </div>
-                <h4 id="sensacionTermicaActual"></h4>
             </div>
-            <div class="container">
+            <div class="container panel">
                 <div class="flex-container">
                     <div class="container">
                         <img src="" alt="" id="iconoViento">
@@ -100,7 +96,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
+            <div class="container panel">
                 <div class="flex-container">
                     <div class="container">
                         <img src="iconos/003-humidity.png" alt="iconoHumedad">
@@ -111,20 +107,14 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
+            <div class="container panel">
                 <div class="flex-container">
                     <div class="container">
                         <img src="iconos/023-sunrise.png" alt="iconoSunrise">
-                    </div>
-                    <div class="container">
-                        <h4 id="tiempoSunrise"></h4>
-                    </div>
-                </div>
-                <div class="flex-container">
-                    <div class="container">
                         <img src="iconos/030-sunset.png" alt="iconoSunset">
                     </div>
                     <div class="container">
+                        <h4 id="tiempoSunrise"></h4>
                         <h4 id="tiempoSunset"></h4>
                     </div>
                 </div>
