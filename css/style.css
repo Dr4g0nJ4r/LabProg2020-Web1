@@ -58,9 +58,15 @@ h3 {
     font-weight: bolder;
 }
 
+#panelPronostico {
+    margin-bottom: 100px;
+}
+
 footer {
     padding-top: 10px;
-    position: fixed;
+    padding-bottom: 10px;
+    margin-bottom: 0px;
+    position: relative;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -69,10 +75,16 @@ footer {
     text-align: center;
 }
 
+footer>div>p {
+    padding: 0px;
+    margin: 0px;
+}
+
 #buscador {
     position: relative;
     background-color: #034748;
     text-align: right;
+    padding: 10px;
 }
 
 .flex-container {
@@ -90,8 +102,6 @@ footer {
     padding: 1px;
     justify-content: center;
 }
-
-.container {}
 
 .container>img {
     width: 50px;
