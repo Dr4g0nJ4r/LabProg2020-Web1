@@ -14,23 +14,6 @@ function setCities(data) {
     for (x in data) { cities.push(data[x].name) }
 }
 
-function obtenerCoordenadas(ciudad) {
-    let coordenadas = [];
-    let cont = 0;
-    while (encontrado && cont <= data.length) {
-        if (data[cont].name == ciudad) {
-            coordenadas.push(data[cont].coord.lat);
-            coordenadas.push(data[cont].coord.lon);
-            encontrado = true;
-        } else {
-            cont++
-
-        }
-
-    }
-    return coordenadas;
-}
-
 function autocomplete(inp) {
     var arr = this.cities;
     var currentFocus;
