@@ -136,7 +136,7 @@ function llenarListaHistorial(dato) {
     for (x in dato) {
         let li = document.createElement("li");
         li.className = "elemento-lista";
-        li.appendChild(document.createTextNode(obtenerFecha(dato[x].dt) + "-" + "Temperatura: " + dato[x].temp + " °C " + "- Viento: " + velocidadViento(dato[x].wind_speed) + " Km/h " + dato[x].humidity + " % - " + dato[x].weather[0].description));
+        li.appendChild(document.createTextNode(obtenerFecha(dato[x].dt) + "-" + "Temp: " + dato[x].temp + " °C " + "- Viento: " + velocidadViento(dato[x].wind_speed) + " Km/h - " + "Humedad: " + dato[x].humidity + " % - " + dato[x].weather[0].description));
         ul.appendChild(li)
     }
 }
