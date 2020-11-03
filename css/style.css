@@ -91,20 +91,17 @@ footer>div>p {
 @media (max-width: 800px){
     .contenedor{flex-direction: column;
         justify-content: center;}
-    #temperatura{flex-direction: column;}
     #fecha-resumen{flex-direction: column;}
     #temp{
-        flex:3;
         flex-direction: column;
-        
     }
     #hum-sol{flex-direction: column;}
     #imagen-sol{justify-content: space-around;display: flex;}
     #humedad-presion{justify-content: space-around;}
-    #temperatura{
-        flex:3;
-        flex-direction:  column;}
+    #temperatura{flex-direction: column;}
+    
 }
+
 
 .contenedor{
     display: flex;
@@ -155,6 +152,7 @@ footer>div>p {
 }
 
 #temperatura {
+    display:flex;
     flex: 3;
     flex-direction: row;
     border: yellow solid 2px;
