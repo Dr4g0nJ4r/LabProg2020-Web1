@@ -1,17 +1,8 @@
-html {
-    font-size: 1rem;
-}
-
 
 /*css del autocompletado!*/
 
 * {
     box-sizing: border-box;
-}
-
-body {
-    font: 16px Arial;
-    padding-bottom: 70px;
 }
 
 .autocomplete {
@@ -43,20 +34,8 @@ body {
 }
 
 .autocomplete-active {
-    /*when navigating through the items using the arrow keys:*/
     background-color: DodgerBlue !important;
     color: #ffffff;
-}
-
-h4 {
-    color: #3A3335;
-    font-size: small;
-}
-
-h3 {
-    color: #3A3335;
-    font-size: x-large;
-    font-weight: bolder;
 }
 
 footer {
@@ -82,52 +61,294 @@ footer>div>p {
     background-color: #034748;
     text-align: right;
     padding: 10px;
+    
 }
 
-.flex-container {
-    display: flex;
-    justify-content: center;
-}
-
-.panel {
-    background-color: #eef4ed;
-}
-
-.flex-container>div {
-    width: 100%;
-    text-align: center;
-    padding: 1px;
-    justify-content: center;
-}
-
-.container>img {
-    width: 50px;
-    padding: 0px;
-}
-
-.container>h3 {
-    font-weight: bolder;
-    text-align: center;
-    color: #3a3335;
-}
-
-.container>h4 {
-    font-weight: lighter;
-    text-align: center;
-    color: #3a3335;
-}
-
-#nombreCiudad {
-    font-size: xx-large;
-    font-weight: bold;
-}
-
-#fechaActual {
-    font-size: large;
-    font-weight: 200;
+#buscador-section{
+    border-bottom: yellow 3px solid;
 }
 
 .btn-group {
     text-align: center;
     align-content: center;
+}
+/*todo el panel de datos*/
+#panelCiudadFecha{
+    background-image: url("../imagenes/Del-clima.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 5px;
+    border-bottom: yellow solid 3px;
+    color: #fffafa;
+    display: flex;
+    flex-direction: column;
+
+    -moz-box-shadow:    inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #000000;
+    box-shadow:         inset 0 0 10px #000000;
+}
+
+
+
+.contenedor{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    
+
+}
+
+.contenedor-item{
+    display: flex;
+    
+}
+
+/*fecha-resumen*/
+
+#resumen-clima{
+    text-align: center;
+vertical-align: middle;
+margin-right: 10%;
+}
+#nombre-fecha{
+    font-size: x-large;
+    margin-left: 10px;
+    margin-top: 2px;
+
+}
+#nombreCiudad{
+    font-weight: bold;
+    font-size: 100px;
+}
+
+#fecha-resumen{
+    flex:1;
+    flex-grow: inherit;
+    justify-content: space-between;
+}
+/*temperatura y viento*/
+#temp{
+    flex:3;
+    
+}
+.contenedor-item-1{
+    display: flex;
+    flex-direction: column;
+}
+
+#temperatura{
+    flex:3;
+    flex-direction: row;
+    border: yellow solid 2px ;
+    border-radius: 25px;
+    background-color: #736dc0;
+    opacity: 0.8;
+    margin: 10px;
+    -moz-box-shadow:    inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #000000;
+    box-shadow:         inset 0 0 10px #000000;
+}
+
+#temp-actual{
+    text-align: left;
+    margin: auto;
+}
+
+#temperaturaActual{
+    font-size: 180px;
+    font-weight: 3px;
+    margin: 10px;
+}
+
+
+#temp-min-max-sens{
+    text-align: left;
+    margin: auto;
+}
+
+
+#viento{
+    margin: 10px;
+    flex-direction: column;
+    flex:1;
+    display:flex;
+    
+}
+
+
+#imagen-viento img{
+    display: block;
+    width: 30%;
+    height: auto;
+    flex:2;
+    margin: auto;
+    
+}
+
+#vectorViento{
+    font-size: 60px;
+}
+
+.contenedor-item-1-2{
+    margin: auto;
+    
+}
+/*humedad y sol*/
+
+
+#humedad-presion{
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    justify-content: space-between;
+}
+#hum-pres{
+    text-align: left;
+vertical-align: middle;
+margin:auto;
+padding: 20px;
+}
+#imagen-humedad{
+    display: block;
+    width: 30%;
+    height: auto;
+    flex:2;
+    margin: auto;
+    padding: 20px;
+}
+#soles{
+    flex-direction: column;
+}
+#valor-tiempo-sol{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+#hum-sol{
+    flex:1;
+    display: flex;
+    justify-content: space-between;
+}
+/*pronostico*/
+
+#panelPronostico{
+    background-image: url("../imagenes/foto-pronostico2recortado.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    -moz-box-shadow:    inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #000000;
+    box-shadow:         inset 0 0 10px #000000;
+    height: 680px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#cartel-pronostico{
+    border-bottom: 3px yellow solid;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    background-color: #007bff;
+}
+#btn-group-pronostico{
+    margin-top: 200px;
+    box-shadow: -10px -10px 30px 6px rgba(239, 255, 9, 0.1),
+              10px 10px 30px 6px rgba(235, 253, 151, 0.15);
+}
+
+#datos-pronostico{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: antiquewhite;
+    
+}
+#logoPronostico{
+    
+    width: 30%;
+    height: auto;
+}
+/*historico*/
+
+#historico{
+    border-top: yellow 3px solid;
+    display: flex;
+    background-image: url('../imagenes/foto-pronostico.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    -moz-box-shadow:    inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #000000;
+    box-shadow:         inset 0 0 10px #000000;
+    height: 600px;
+    flex-direction: column;
+    align-items: center;
+}
+#ciudad{
+    margin: 20px;
+    color: #fffafa;
+    font-size: 80px;
+    text-shadow: 0px 3px 0px #b2a98f,
+                 0px 14px 10px rgba(0,0,0,0.15),
+                 0px 24px 2px rgba(0,0,0,0.1),
+                 0px 34px 30px rgba(0,0,0,0.1);
+}
+
+.elemento-lista{
+    background-color: #00d9ff;
+    border: solid yellow 2px;
+    border-radius: 5px;
+    font-size: 30px;
+    list-style-type: none;
+    font-weight: bold;
+    padding: 10px;
+    margin: 3px;
+    opacity: 0.7;
+    -moz-box-shadow:    inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #000000;
+    box-shadow:         inset 0 0 10px #000000;
+}
+/*Acerca de*/
+#parrafo-1{
+    font-size: 20px;
+    color: #050a0a;
+    margin: 50px;
+    text-align: left;
+    
+}
+#parrafos{
+    border: #034748 solid 3px;
+    background-color: gray;
+    opacity: 80%;
+    border-radius: 25px;
+    margin: 50px;
+}
+#acercade{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-image: url("../imagenes/paisaje.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 628px;
+    -moz-box-shadow:    inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #000000;
+    box-shadow:         inset 0 0 10px #000000;
+}
+#links-titulo{
+    font-size: 30px;
+    font-weight: bold;
+    color: #050a0a;
+    margin: 50px;
+    text-align: left;
+}
+#links li{
+    
+    list-style-type: none;
+    
+}
+a {
+    color: #050a0a;
+    font-size: 20px;
 }
