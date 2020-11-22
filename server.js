@@ -10,7 +10,7 @@ app.listen(5000)
 
 
 //estos son meddlewares
-//para que el param tenga un body, del cual sacar datos para la creación de gatitos
+//para que el param tenga un body.
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use(express.static('.'));
