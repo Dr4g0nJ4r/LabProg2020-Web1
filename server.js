@@ -28,7 +28,11 @@ app.get('/api/:id', (req,res)=>{
 
   listaCiudades.forEach((ciudad)=>{
     if (ciudad.id == id) {
+      res.status(200)
       res.send(ciudad)
+    }else{
+      res.status(404)
+      res.send("no se encontró la ciudad")
     }
   })
   
