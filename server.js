@@ -2,8 +2,6 @@ const express = require('express')
 const bodyParser = require('body-Parser')
 const app = express()
 const ruta = require('path')
-const clima = require('./JS/clima')
-const cities = require('./JS/cities')
 const listaCiudades = require('./JS/listaCiudadesArgentina.json')
 
 
@@ -29,7 +27,7 @@ app.get('/api/:id', (req,res)=>{
   const {id}=params
 
   listaCiudades.forEach((ciudad)=>{
-    if (ciudad.id == this.id) {
+    if (ciudad.id == id) {
       res.send(ciudad)
     }
   })
