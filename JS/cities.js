@@ -9,7 +9,7 @@ function getCiudad(id){
     fetch('./JS/listaCiudadesArgentina.json')
         .then(blob => blob.json())
         .then(data => {
-            data.array.forEach(elemento => {
+            data.forEach(elemento => {
                 if(elemento.id == this.id){
                     return elemento
                 }
