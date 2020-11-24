@@ -25,16 +25,20 @@ app.get('/', function (req, res) {
 app.get('/api/:id', (req,res)=>{
   const {params}= req
   const {id}=params
+  var encontrado = false
 
   listaCiudades.forEach((ciudad)=>{
+    
     if (ciudad.id == id) {
-      res.status(200)
+      encontrado=true
       res.send(ciudad)
-    }else{
-      res.status(404)
-      res.send("no se encontró la ciudad")
     }
+    
   })
+
+  if(!encontrado){
+    res.status(404).send('Not found');
+  }
   
   
 })
