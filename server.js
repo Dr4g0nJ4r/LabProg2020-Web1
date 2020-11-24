@@ -21,3 +21,8 @@ app.get('/', function (req, res) {
     
   res.sendFile(ruta.join(__dirname + '/index.html'))
 })
+
+
+app.get('/api/:id', (req,res)=>{
+})
+
