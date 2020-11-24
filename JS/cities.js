@@ -3,11 +3,16 @@ getCiudades()
 
 /////////////////////////////////////
 function getCiudad(id){
-    ciudades.forEach( ciudad =>{
-        if(ciudad.id == id){
-            return ciudad
-        }
-    })
+    fetch('./JS/listaCiudadesArgentina.json')
+        .then(blob => blob.json())
+        .then(data => {
+            data.array.forEach(elemento => {
+                if(elemento.id == this.id){
+                    return elemento
+                }
+            });
+        })
+        .catch(err => console.log(err));
 }
 
 function getCiudades() {
