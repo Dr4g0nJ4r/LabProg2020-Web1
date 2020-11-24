@@ -3,7 +3,7 @@ getCiudades()
 
 //variables para exportar
 
-export = {getCiudad}
+export {getCiudad}
 /////////////////////////////////////
 function getCiudad(id){
     fetch('./JS/listaCiudadesArgentina.json')

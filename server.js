@@ -3,7 +3,8 @@ const bodyParser = require('body-Parser')
 const app = express()
 const ruta = require('path')
 
-
+//imports de metodos de cities
+import { getCiudad } from "cities";
 //escucha en el puerto 5000
 
 app.listen(5000)
