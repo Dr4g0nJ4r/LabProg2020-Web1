@@ -1,6 +1,15 @@
 var ciudades = [];
 getCiudades()
 
+/////////////////////////////////////
+function getCiudad(id){
+    ciudades.forEach( ciudad =>{
+        if(ciudad.id == id){
+            return ciudad
+        }
+    })
+}
+
 function getCiudades() {
     fetch('./JS/listaCiudadesArgentina.json')
         .then(blob => blob.json())
