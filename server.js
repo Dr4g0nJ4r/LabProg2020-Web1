@@ -18,8 +18,6 @@ app.use(express.static('.'));
 
 //aca se sirve la pagina
 app.get('/', function (req, res) {
-    //obtener datos
-    
   res.sendFile(ruta.join(__dirname + '/index.html'))
 })
 
