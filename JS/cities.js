@@ -1,7 +1,6 @@
 var ciudades = [];
 getCiudades()
 
-//variables para exportar
 /////////////////////////////////////
 function getCiudad(id){
     fetch('./JS/listaCiudadesArgentina.json')
