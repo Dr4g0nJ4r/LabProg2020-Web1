@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Dr4g0nJ4r/LabProg2020-Web1#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nvm": "0.0.4"
   }
 }
