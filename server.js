@@ -178,6 +178,11 @@ var actual //datos actuales del clima;
 var pronostico; //datos pronóstico
 var historico = []; //datos historico
 
+
+app.get('/api/test',(req,res)=>{
+    res.send('probando endpoints')
+})
+
 function fetchPronostico(latitud, longitud) {
     return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")
 }
