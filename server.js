@@ -45,7 +45,6 @@ app.post('/api/nuevaCiudad', (req, res) => {
                 existe = true;
                 res.status(200).send(`Ya existe una ciudad con el id: ${body.id}`);
             }
-
         })
         //no existe la ciudad, se crea una nueva
     if (!existe) {
@@ -57,8 +56,32 @@ app.post('/api/nuevaCiudad', (req, res) => {
             coord: body.coord
         }
         listaCiudades.push(nuevaCiudad);
-        res.status(200).send(`Se creó una nueva ciudad ${body.name}`);
+        ciudadNueva = listaCiudades.find(ciudad => ciudad.id === body.id);
+        res.status(200).send(`Se creó una nueva ciudad ${ciudadNueva}`);
         console.log(listaCiudades);
+    }
+})
+
+//Publica un endpoint para actualizar datos de la ciudad
+app.put('/api/actualizarCiudad/:id', (req, res) => {
+    const { params } = req;
+    const { id } = params;
+    const { body } = req;
+    let existe = false;
+    ciudad = listaCiudades.find(data => data.id == id);
+    if (ciudad == undefined) {
+        res.status(200).send(`No existe una ciudad con el id ${id}`);
+    } else {
+
+        listaCiudades.forEach((ciudad) => {
+            if (ciudad.id == id) {
+                ciudad.name = body.name;
+                ciudad.state = body.state;
+                ciudad.country = body.country;
+                ciudad.coord = body.coord;
+            }
+        })
+        res.status(200).send(`Se actualizó la ciudad con el id ${id}`);
     }
 
 })
