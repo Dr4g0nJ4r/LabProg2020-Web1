@@ -179,10 +179,18 @@ var pronostico; //datos pronóstico
 var historico = []; //datos historico
 
 
-app.get('/api/test',(req,res)=>{
-    const {query}=req
-    console.log(query.ciudad)
-    res.send('testing')
+app.get('/api/test/:ciudad',(req,res)=>{
+    const {params}=req
+    const {ciudad}=params
+    console.log(ciudad)
+
+    fetch('https://api.openweathermap.org/data/2.5/weather?q='+ciudad+'&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf')
+        .then(Response => Response.json())
+        .then(data => {
+            res.send(data)
+        })
+
+    
 })
 
 function fetchPronostico(latitud, longitud) {
