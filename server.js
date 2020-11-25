@@ -69,20 +69,47 @@ app.get('/', function(req, res) {
 
 //Obtener ciudades por id
 app.get('/api/:id', (req, res) => {
-        const { params } = req
-        const { id } = params
-        var encontrado = false
-        listaCiudades.forEach((ciudad) => {
-            if (ciudad.id == id) {
-                encontrado = true
-                res.status(200).send(ciudad)
-            }
-        })
-        if (!encontrado) {
-            res.status(404).send('Not found');
+    const { params } = req
+    const { id } = params
+    var encontrado = false
+    listaCiudades.forEach((ciudad) => {
+        if (ciudad.id == id) {
+            encontrado = true
+            res.status(200).send(ciudad)
         }
     })
-    //Publica una nueva ciudad POST. Se valida con el jsonSchema para verificar campos y valores
+    if (!encontrado) {
+        res.status(404).send('Not found');
+    }
+})
+
+/*
+  Endpoint get que permite consultar varias ciudades.
+  Estructura: api/ciudad?cantidad={cantidad de ciudades a retornar}&desde={desde que ciudad se retorna}
+
+*/
+app.get('/api/ciudades', (req, res) => {
+    const { query } = req;
+    let cantidad = query.cantidad;
+    let desde = query.desde;
+    let arrayCiudades = [];
+    if (desde >= listaCiudades.length) {
+        res.status(406).send(`Se excede el límite desde el que se quiere consultar. La lista solo cuenta con ${listaCiudades.length} ciudades`)
+    } else {
+        if (cantidad <= 0) {
+            res.status(406).send(`Se ingresó un valor inválido de cantidad. Debe ingresar un número entero positivo.`)
+        } else {
+            for (let index = desde; index < cantidad + desde; index++) {
+                let element = listaCiudades[index];
+                arrayCiudades.push(element);
+            }
+            res.status(200).send(arrayCiudades);
+        }
+    }
+    console.log(arrayCiudades);
+})
+
+//Publica una nueva ciudad POST. Se valida con el jsonSchema para verificar campos y valores
 app.post('/api/ciudad', validate({ body: jsonSchema }), (req, res) => {
     const { body } = req;
     let existe = false;
@@ -169,11 +196,18 @@ app.use(function(err, req, res, next) {
 //ejemplo3: la ciudad id= 1, cantidad = 7, desde=0
 //devolverá todos los pronosticos ( siete pronosticos) de neuquén
 app.get('/api/pronostico/', (req, res) => {
-        const { query } = req
+    const { query } = req
 
 
-    })
-    ///////////////METODOS FETCH///////////////////
+})
+
+
+
+
+
+
+
+///////////////METODOS FETCH///////////////////
 var actual //datos actuales del clima;
 var pronostico; //datos pronóstico
 var historico = []; //datos historico
