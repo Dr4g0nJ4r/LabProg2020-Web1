@@ -57,7 +57,11 @@ app.get('/api/pronostico/',(req,res)=>{
 
 
 })
+///////////////METODOS FETCH///////////////////
 
+function fetchPronostico(latitud,longitud) {
+  return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")
+}
 
 //////////TEST/////////////
 //este fetch funciona bien!
