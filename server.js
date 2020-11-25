@@ -39,11 +39,11 @@ app.get('/api/:id', (req,res)=>{
 
 
 //endpoint para solicitar el pronostico en días de una ciudad.
-//se estructura de la siguiente manera /pronostico?q={id_de_ciudad}&cantidad={numero_de_días}&desde={numero_de_dia}
+//se estructura de la siguiente manera /pronostico?q={id_de_ciudad}&cantidad={número_de_días}&desde={número_de_día}
 
 //esta consulta requiere de un id de la ciudad a consulatar
-//el numero de días a consultar ( hasta 7 dias)
-//el numero del día del cual se comienza a recorrer
+//el número de días a consultar ( hasta 7 dias)
+//el número del día del cual se comienza a recorrer
 
 //ejemplo: la ciudad id= 1, cantidad = 2, desde=3
 //devolverá el pronostico de neuquén, solo dos pronosticos a partir del tercer día.

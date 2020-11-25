@@ -15,8 +15,8 @@ function getCiudad(id){
         .catch(err => console.log(err));
 }
 
-function getCiudades() {
-    fetch('./JS/listaCiudadesArgentina.json')
+ function getCiudades() {
+     fetch('./JS/listaCiudadesArgentina.json')
         .then(blob => blob.json())
         .then(data => {
             setCiudades(data)
