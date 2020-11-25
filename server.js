@@ -5,10 +5,42 @@ const ruta = require('path')
 const listaCiudades = require('./JS/listaCiudadesArgentina.json')
 const fetch = require('node-fetch')
 const fs = require('fs')
+const { response } = require('express')
 const validate = require('express-jsonschema').validate;
+
+//JSON schema para POST
+var jsonSchema = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'number',
+            required: true
+        },
+        name: {
+            type: "string",
+            required: true
+        },
+        state: {
+            type: "string",
+            required: true
+        },
+        country: {
+            type: "string",
+            required: true
+        },
+        coord: {
+            type: "object",
+            properties: {
+                lon: { type: "number", required: true },
+                lat: { type: "number", required: true }
+            }
+        }
+    }
+}
 
 //escucha en el puerto 5000
 app.listen(5000)
+
 
 
 //estos son meddlewares
@@ -38,7 +70,7 @@ app.get('/api/:id', (req, res) => {
         }
     })
     //Publica una nueva ciudad POST
-app.post('/api/nuevaCiudad', (req, res) => {
+app.post('/api/nuevaCiudad', validate({ body: jsonSchema }), (req, res) => {
     const { body } = req;
     let existe = false;
     listaCiudades.forEach((ciudad) => {
@@ -63,8 +95,10 @@ app.post('/api/nuevaCiudad', (req, res) => {
     }
 })
 
+
+
 //Publica un endpoint para actualizar datos de la ciudad
-app.put('/api/actualizarCiudad/:id', (req, res) => {
+app.put('/api/actualizarCiudad/:id', validate({ body: jsonSchema }), (req, res) => {
     const { params } = req;
     const { id } = params;
     const { body } = req;
@@ -86,9 +120,27 @@ app.put('/api/actualizarCiudad/:id', (req, res) => {
     }
 
 })
-
-//endpoint para solicitar el pronostico en días de una ciudad.
-//se estructura de la siguiente manera /pronostico?q={id_de_ciudad}&cantidad={número_de_días}&desde={número_de_día}
+app.use(function(err, req, res, next) {
+        var responseData;
+        if (err.name = 'JsonSchemaValidation') {
+            console.log(err.message);
+            res.status(400);
+            responseData = {
+                statusText: 'Bad Request',
+                jsonSchemaValidation: true,
+                validations: err.validations
+            };
+            if (req.xhr || req.get('Content-Type') === 'application/json') {
+                res.json(responseData);
+            } else {
+                res.render('badRequestTemplate', responseData);
+            }
+        } else {
+            next(err);
+        }
+    })
+    //endpoint para solicitar el pronostico en días de una ciudad.
+    //se estructura de la siguiente manera /pronostico?q={id_de_ciudad}&cantidad={número_de_días}&desde={número_de_día}
 
 //esta consulta requiere de un id de la ciudad a consulatar
 //el número de días a consultar ( hasta 7 dias)
