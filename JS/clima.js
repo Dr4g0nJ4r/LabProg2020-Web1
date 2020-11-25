@@ -7,7 +7,7 @@ var actual // datos actuales del clima
 var pronostico // datos 7 días después..
 var latitud = -38.95; //latitud de la ciudad de Neuquén
 var longitud = -68.06; //longitud de la ciudad de Neuquén
-var ciudadActual = "Neuquén";
+var ciudadActual = "Neuquen";
 
 
 
@@ -23,7 +23,7 @@ function ActualizarDatos(ciudad) {
 en cuanto a los datos del historico, realizar un llamado por cada día consultado hasta un maximo de 5 días antes
 de la fecha actual, luego los ordena de menor a mayor*/
 function actualizarActual(ciudad) {
-
+/*
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf`)
         .then(Response => Response.json())
         .then(data => {
@@ -36,6 +36,20 @@ function actualizarActual(ciudad) {
             refrescarPanelPrincipal(data);
         })
         .catch(err => console.log(err));
+*/
+fetch('http://localhost:5000/api/actual/'+ciudad)
+.then(Response => Response.json())
+.then(data => {
+    setActual(data);
+    this.latitud = data.coord.lat;
+    this.longitud = data.coord.lon;
+    actualizarPronostico(this.latitud, this.longitud)
+    actualizarHistorico(this.latitud, this.longitud)
+        //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
+    refrescarPanelPrincipal(data);
+})
+.catch(err => console.log(err));
+
 
 }
 /*Funcion que me sirve para realizar un llamado a la API y pedir los datos del pronostico climático de los

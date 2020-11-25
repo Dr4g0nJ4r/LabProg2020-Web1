@@ -179,7 +179,7 @@ var pronostico; //datos pronóstico
 var historico = []; //datos historico
 
 
-app.get('/api/test/:ciudad',(req,res)=>{
+app.get('/api/actual/:ciudad',(req,res)=>{
     const {params}=req
     const {ciudad}=params
     console.log(ciudad)
@@ -187,8 +187,10 @@ app.get('/api/test/:ciudad',(req,res)=>{
     fetch('https://api.openweathermap.org/data/2.5/weather?q='+ciudad+'&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf')
         .then(Response => Response.json())
         .then(data => {
+            console.log(data)
             res.send(data)
-        })
+            }
+        )
 
     
 })
