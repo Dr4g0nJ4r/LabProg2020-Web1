@@ -180,7 +180,9 @@ var historico = []; //datos historico
 
 
 app.get('/api/test',(req,res)=>{
-    res.send('probando endpoints')
+    const {query}=req
+    console.log(query.ciudad)
+    res.send('testing')
 })
 
 function fetchPronostico(latitud, longitud) {
