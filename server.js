@@ -8,7 +8,20 @@ const fs = require('fs')
 const { response } = require('express')
 const validate = require('express-jsonschema').validate;
 
-//JSON schema para POST
+//JSON schema para verificar y comprobar los campos y valores de los json que se reciben para los endpoint POST y PUT
+/*
+Ejemplo de json recibido con los campos y valores de forma correcta
+{
+        "id": 1,
+        "name": "Neuquén",
+        "state": "",
+        "country": "AR",
+        "coord": {
+            "lon": -68.059097,
+            "lat": -38.951611
+        }
+    }
+*/
 var jsonSchema = {
     type: 'object',
     properties: {
@@ -69,7 +82,7 @@ app.get('/api/:id', (req, res) => {
             res.status(404).send('Not found');
         }
     })
-    //Publica una nueva ciudad POST
+    //Publica una nueva ciudad POST. Se valida con el jsonSchema para verificar campos y valores
 app.post('/api/ciudad', validate({ body: jsonSchema }), (req, res) => {
     const { body } = req;
     let existe = false;
@@ -97,7 +110,7 @@ app.post('/api/ciudad', validate({ body: jsonSchema }), (req, res) => {
 
 
 
-//Publica un endpoint para actualizar datos de la ciudad
+//Publica un endpoint para actualizar datos de la ciudad. Se valida con el jsonSchema para verificar campos y valores
 app.put('/api/ciudad/:id', validate({ body: jsonSchema }), (req, res) => {
     const { params } = req;
     const { id } = params;
@@ -121,6 +134,8 @@ app.put('/api/ciudad/:id', validate({ body: jsonSchema }), (req, res) => {
     }
 
 })
+
+//En caso de surgir un error con el esquema del Json, se ejecuta la siguiente función que retorna información sobre el error
 app.use(function(err, req, res, next) {
         var responseData;
         if (err.name = 'JsonSchemaValidation') {
