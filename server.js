@@ -70,7 +70,7 @@ app.get('/api/:id', (req, res) => {
         }
     })
     //Publica una nueva ciudad POST
-app.post('/api/nuevaCiudad', validate({ body: jsonSchema }), (req, res) => {
+app.post('/api/ciudad', validate({ body: jsonSchema }), (req, res) => {
     const { body } = req;
     let existe = false;
     listaCiudades.forEach((ciudad) => {
@@ -98,7 +98,7 @@ app.post('/api/nuevaCiudad', validate({ body: jsonSchema }), (req, res) => {
 
 
 //Publica un endpoint para actualizar datos de la ciudad
-app.put('/api/actualizarCiudad/:id', validate({ body: jsonSchema }), (req, res) => {
+app.put('/api/ciudad/:id', validate({ body: jsonSchema }), (req, res) => {
     const { params } = req;
     const { id } = params;
     const { body } = req;
