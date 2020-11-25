@@ -21,25 +21,25 @@ app.get('/', function (req, res) {
   res.sendFile(ruta.join(__dirname + '/index.html'))
 })
 
-
+//Obtener ciudades por id
 app.get('/api/:id', (req,res)=>{
   const {params}= req
   const {id}=params
   var encontrado = false
-
   listaCiudades.forEach((ciudad)=>{
-    
     if (ciudad.id == id) {
       encontrado=true
       res.send(ciudad)
     }
-    
   })
-
   if(!encontrado){
     res.status(404).send('Not found');
   }
-  
-  
+})
+
+app.get('/api/pronostico/',(req,res)=>{
+  const {query}= req
+
+
 })
 
