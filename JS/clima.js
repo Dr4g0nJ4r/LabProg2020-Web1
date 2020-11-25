@@ -32,7 +32,7 @@ function actualizarActual(ciudad) {
             this.longitud = data.coord.lon;
             actualizarPronostico(this.latitud, this.longitud)
             actualizarHistorico(this.latitud, this.longitud)
-            //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
+                //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
             refrescarPanelPrincipal(data);
         })
         .catch(err => console.log(err));
@@ -253,7 +253,7 @@ function refrescarPanelPronostico() {
         btn.className = "btn btn-secondary";
         //btn.addEventListener("onclick", function() { obtenerFechaSinAnio(btn.value) }, false)
         btn.textContent = obtenerFechaSinAnio(pronostico[x].dt);
-        btn.onclick = function () { refrescarDatosPronostico(this.value) };
+        btn.onclick = function() { refrescarDatosPronostico(this.value) };
         btnGroup.appendChild(btn);
     }
     refrescarDatosPronostico(obtenerFechaSinAnio(pronostico[1].dt));

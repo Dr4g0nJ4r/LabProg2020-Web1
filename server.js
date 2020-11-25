@@ -7,7 +7,6 @@ const fetch = require('node-fetch')
 
 
 //escucha en el puerto 5000
-
 app.listen(5000)
 
 
@@ -24,20 +23,33 @@ app.get('/', function(req, res) {
 
 //Obtener ciudades por id
 app.get('/api/:id', (req, res) => {
-    const { params } = req
-    const { id } = params
-    var encontrado = false
-    listaCiudades.forEach((ciudad) => {
-        if (ciudad.id == id) {
-            encontrado = true
-            res.status(200).send(ciudad)
+        const { params } = req
+        const { id } = params
+        var encontrado = false
+        listaCiudades.forEach((ciudad) => {
+            if (ciudad.id == id) {
+                encontrado = true
+                res.status(200).send(ciudad)
+            }
+        })
+        if (!encontrado) {
+            res.status(404).send('Not found');
         }
     })
-    if (!encontrado) {
-        res.status(404).send('Not found');
+    //Publica una nueva ciudad POST
+app.post('/api/nuevaCiudad', (req, res) => {
+    const { body } = req;
+    const nuevaCiudad = {
+        id: body.id,
+        name: body.name,
+        state: body.state,
+        country: body.country,
+        coord: body.coord
     }
+    listaCiudades.push(nuevaCiudad);
+    res.status(200).send(`Se creó una nueva ciudad ${body.name}`);
+    console.log(listaCiudades);
 })
-
 
 //endpoint para solicitar el pronostico en días de una ciudad.
 //se estructura de la siguiente manera /pronostico?q={id_de_ciudad}&cantidad={número_de_días}&desde={número_de_día}
@@ -68,10 +80,12 @@ function fetchPronostico(latitud, longitud) {
 
 //////////TEST/////////////
 //este fetch funciona bien!
+
 fetch(`https://api.openweathermap.org/data/2.5/weather?q=Ushuaia&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf`)
     .then(blob => blob.json())
     .then(data => {
         console.log(data)
         this.actual = data
+            //refrescarPanelPrincipal(data)
     })
     .catch(err => console.log(err));
