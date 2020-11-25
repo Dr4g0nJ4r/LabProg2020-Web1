@@ -29,7 +29,7 @@ app.get('/api/:id', (req,res)=>{
   listaCiudades.forEach((ciudad)=>{
     if (ciudad.id == id) {
       encontrado=true
-      res.send(ciudad)
+      res.status(200).send(ciudad)
     }
   })
   if(!encontrado){
@@ -37,6 +37,20 @@ app.get('/api/:id', (req,res)=>{
   }
 })
 
+
+//endpoint para solicitar el pronostico en días de una ciudad.
+//se estructura de la siguiente manera /pronostico?q={id_de_ciudad}&cantidad={numero_de_días}&desde={numero_de_dia}
+
+//esta consulta requiere de un id de la ciudad a consulatar
+//el numero de días a consultar ( hasta 7 dias)
+//el numero del día del cual se comienza a recorrer
+
+//ejemplo: la ciudad id= 1, cantidad = 2, desde=3
+//devolverá el pronostico de neuquén, solo dos pronosticos a partir del tercer día.
+//ejemplo2: la ciudad id= 1, cantidad = 2, desde=6
+//devolverá un error, debido a que solo hay hasta 7 pronosticos por día a partir del día actual.
+//ejemplo3: la ciudad id= 1, cantidad = 7, desde=0
+//devolverá todos los pronosticos ( siete pronosticos) de neuquén
 app.get('/api/pronostico/',(req,res)=>{
   const {query}= req
 
