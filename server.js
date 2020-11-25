@@ -110,6 +110,7 @@ app.put('/api/actualizarCiudad/:id', validate({ body: jsonSchema }), (req, res) 
 
         listaCiudades.forEach((ciudad) => {
             if (ciudad.id == id) {
+                ciudad.id = body.id;
                 ciudad.name = body.name;
                 ciudad.state = body.state;
                 ciudad.country = body.country;
