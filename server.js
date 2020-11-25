@@ -13,29 +13,29 @@ app.listen(5000)
 
 //estos son meddlewares
 //para que el param tenga un body.
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static('.'));
 
 //aca se sirve la pagina
-app.get('/', function (req, res) {
-  res.sendFile(ruta.join(__dirname + '/index.html'))
+app.get('/', function(req, res) {
+    res.sendFile(ruta.join(__dirname + '/index.html'))
 })
 
 //Obtener ciudades por id
-app.get('/api/:id', (req,res)=>{
-  const {params}= req
-  const {id}=params
-  var encontrado = false
-  listaCiudades.forEach((ciudad)=>{
-    if (ciudad.id == id) {
-      encontrado=true
-      res.status(200).send(ciudad)
+app.get('/api/:id', (req, res) => {
+    const { params } = req
+    const { id } = params
+    var encontrado = false
+    listaCiudades.forEach((ciudad) => {
+        if (ciudad.id == id) {
+            encontrado = true
+            res.status(200).send(ciudad)
+        }
+    })
+    if (!encontrado) {
+        res.status(404).send('Not found');
     }
-  })
-  if(!encontrado){
-    res.status(404).send('Not found');
-  }
 })
 
 
@@ -52,22 +52,26 @@ app.get('/api/:id', (req,res)=>{
 //devolverá un error, debido a que solo hay hasta 7 pronosticos por día a partir del día actual.
 //ejemplo3: la ciudad id= 1, cantidad = 7, desde=0
 //devolverá todos los pronosticos ( siete pronosticos) de neuquén
-app.get('/api/pronostico/',(req,res)=>{
-  const {query}= req
+app.get('/api/pronostico/', (req, res) => {
+        const { query } = req
 
 
-})
-///////////////METODOS FETCH///////////////////
+    })
+    ///////////////METODOS FETCH///////////////////
+var actual //datos actuales del clima;
+var pronostico; //datos pronóstico
+var historico = []; //datos historico
 
-function fetchPronostico(latitud,longitud) {
-  return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")
+function fetchPronostico(latitud, longitud) {
+    return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")
 }
 
 //////////TEST/////////////
 //este fetch funciona bien!
 fetch(`https://api.openweathermap.org/data/2.5/weather?q=Ushuaia&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf`)
-        .then(blob => blob.json())
-        .then(data => {
-            console.log(data)
-        })
-        .catch(err => console.log(err));
+    .then(blob => blob.json())
+    .then(data => {
+        console.log(data)
+        this.actual = data
+    })
+    .catch(err => console.log(err));
