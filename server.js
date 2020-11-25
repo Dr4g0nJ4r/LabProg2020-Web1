@@ -212,6 +212,23 @@ var actual //datos actuales del clima;
 var pronostico; //datos pronóstico
 var historico = []; //datos historico
 
+
+app.get('/api/actual/:ciudad',(req,res)=>{
+    const {params}=req
+    const {ciudad}=params
+    console.log(ciudad)
+
+    fetch('https://api.openweathermap.org/data/2.5/weather?q='+ciudad+'&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf')
+        .then(Response => Response.json())
+        .then(data => {
+            console.log(data)
+            res.send(data)
+            }
+        )
+
+    
+})
+
 function fetchPronostico(latitud, longitud) {
     return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")
 }
