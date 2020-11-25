@@ -4,6 +4,7 @@ const app = express()
 const ruta = require('path')
 const listaCiudades = require('./JS/listaCiudadesArgentina.json')
 const fetch = require('node-fetch')
+const fs = require("fs")
 
 
 //escucha en el puerto 5000
