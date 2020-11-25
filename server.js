@@ -39,16 +39,28 @@ app.get('/api/:id', (req, res) => {
     //Publica una nueva ciudad POST
 app.post('/api/nuevaCiudad', (req, res) => {
     const { body } = req;
-    const nuevaCiudad = {
-        id: body.id,
-        name: body.name,
-        state: body.state,
-        country: body.country,
-        coord: body.coord
+    let existe = false;
+    listaCiudades.forEach((ciudad) => {
+            if (ciudad.id == body.id) {
+                existe = true;
+                res.status(200).send(`Ya existe una ciudad con el id: ${body.id}`);
+            }
+
+        })
+        //no existe la ciudad, se crea una nueva
+    if (!existe) {
+        const nuevaCiudad = {
+            id: body.id,
+            name: body.name,
+            state: body.state,
+            country: body.country,
+            coord: body.coord
+        }
+        listaCiudades.push(nuevaCiudad);
+        res.status(200).send(`Se creó una nueva ciudad ${body.name}`);
+        console.log(listaCiudades);
     }
-    listaCiudades.push(nuevaCiudad);
-    res.status(200).send(`Se creó una nueva ciudad ${body.name}`);
-    console.log(listaCiudades);
+
 })
 
 //endpoint para solicitar el pronostico en días de una ciudad.
