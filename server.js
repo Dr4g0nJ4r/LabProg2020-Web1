@@ -3,6 +3,7 @@ const bodyParser = require('body-Parser')
 const app = express()
 const ruta = require('path')
 const listaCiudades = require('./JS/listaCiudadesArgentina.json')
+const fetch = require('node-fetch')
 
 
 //escucha en el puerto 5000
@@ -57,3 +58,12 @@ app.get('/api/pronostico/',(req,res)=>{
 
 })
 
+
+//////////TEST/////////////
+//este fetch funciona bien!
+fetch(`https://api.openweathermap.org/data/2.5/weather?q=Ushuaia&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf`)
+        .then(blob => blob.json())
+        .then(data => {
+            console.log(data)
+        })
+        .catch(err => console.log(err));
