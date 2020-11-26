@@ -128,7 +128,7 @@ function obtenerHora(t) {
 Este es un método asincronico, espera todas las respuestas de la API, antes de devolerlos*/
 async function llamadasHistorico(lat, lon) {
     for (i = 1; i <= 5; i++) {
-        var respuesta = await fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + lat + "&lon=" + lon + "&dt=" + tiempoUnix(i) + "&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf") //historico
+        var respuesta = await fetch('http://localhost:5000/api/historico/'+lat+"&"+lon+"&"+tiempoUnix(i)) //historico
             .then(Response => Response.json())
             .then(data => {
                 setHistorico(data.current)

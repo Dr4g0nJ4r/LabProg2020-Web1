@@ -242,6 +242,19 @@ app.get('/api/pronostico/:latitud&:longitud',(req,res)=>{
     
 })
 
+app.get('/api/historico/:latitud&:longitud&:tiempo',(req,res)=>{
+    const {params}=req
+    const {latitud,longitud,tiempo}=params
+
+    fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + latitud + "&lon=" + longitud + "&dt=" + tiempo + "&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
+        .then(Response => Response.json())
+        .then(data => {
+            res.send(data)
+        })
+
+    
+})
+
 function fetchPronostico(latitud, longitud) {
     return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")
 }
