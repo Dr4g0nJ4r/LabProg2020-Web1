@@ -72,7 +72,7 @@ app.get('/api/:id', (req, res) => {
     const { params } = req
     const { id } = params
     var encontrado = false
-    
+
     listaCiudades.forEach((ciudad) => {
         if (ciudad.id == id) {
             encontrado = true
@@ -183,8 +183,8 @@ app.use(function(err, req, res, next) {
             next(err);
         }
     })
-//endpoint para solicitar el pronostico en días de una ciudad.
-//se estructura de la siguiente manera /pronostico?latitud={idlatitud_de_ciudad}&longitud={longitud_de_ciudad}&cantidad={número_de_días}&desde={número_de_día}
+    //endpoint para solicitar el pronostico en días de una ciudad.
+    //se estructura de la siguiente manera /pronostico?latitud={idlatitud_de_ciudad}&longitud={longitud_de_ciudad}&cantidad={número_de_días}&desde={número_de_día}
 
 //esta consulta requiere de la longitud y de la latitud de la ciudad a consulatar
 //el número de días a consultar ( hasta 7 dias)
@@ -205,28 +205,31 @@ app.get('/api/consulta/q', (req, res) => {
     var cantidad = query.cantidad
     var desde = query.desde
     var pronosticos = []
-    
-    if(cantidad<=7 &&cantidad >1 && desde>=1 && desde<7){
+
+    if (cantidad <= 7 && cantidad > 1 && desde >= 1 && desde < 7) {
         // se establece un limite a la cantidad de días a consultar, que depende del día desde que se empieza a contar
         var limiteCantidad = 7 - desde
-        if(cantidad<=limiteCantidad){
+        if (cantidad <= limiteCantidad) {
 
             fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
-            .then(Response => Response.json())
-            .then(data => {
-                for (let i = desde; i <= cantidad; i++) {
-                    pronosticos.push(data.daily[i])
-                }
-            res.send(pronosticos)
-        })
+                .then(Response => Response.json())
+                .then(data => {
+                    for (let i = desde; i <= cantidad; i++) {
+                        pronosticos.push(data.daily[i])
+                    }
+                    res.send(pronosticos)
+                })
+                .catch();
 
-        }else{
+        } else {
             res.status(404).send("la cantidad supera el limite de días")
         }
-        
+
+
+    } else {
         res.status(404).send("la cantidad o el valor 'desde' son incorrectos")
     }
-    
+
 
 
 })
@@ -240,25 +243,24 @@ app.get('/api/consulta/q', (req, res) => {
 ///////////////ENDPOINTS PARA USO INTERNO///////////////////
 
 //Endpoint para obtener los datos actuales dependiendo de la ciudad
-app.get('/api/actual/:ciudad',(req,res)=>{
-    const {params}=req
-    const {ciudad}=params
+app.get('/api/actual/:ciudad', (req, res) => {
+    const { params } = req
+    const { ciudad } = params
     console.log(ciudad)
 
-    fetch('https://api.openweathermap.org/data/2.5/weather?q='+ciudad+'&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf')
+    fetch('https://api.openweathermap.org/data/2.5/weather?q=' + ciudad + '&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf')
         .then(Response => Response.json())
         .then(data => {
             console.log(data)
             res.send(data)
-            }
-        )
+        })
 
-    
+
 })
 
-app.get('/api/pronostico/:latitud&:longitud',(req,res)=>{
-    const {params}=req
-    const {latitud,longitud}=params
+app.get('/api/pronostico/:latitud&:longitud', (req, res) => {
+    const { params } = req
+    const { latitud, longitud } = params
 
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
         .then(Response => Response.json())
@@ -266,12 +268,12 @@ app.get('/api/pronostico/:latitud&:longitud',(req,res)=>{
             res.send(data)
         })
 
-    
+
 })
 
-app.get('/api/historico/:latitud&:longitud&:tiempo',(req,res)=>{
-    const {params}=req
-    const {latitud,longitud,tiempo}=params
+app.get('/api/historico/:latitud&:longitud&:tiempo', (req, res) => {
+    const { params } = req
+    const { latitud, longitud, tiempo } = params
 
     fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + latitud + "&lon=" + longitud + "&dt=" + tiempo + "&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
         .then(Response => Response.json())
@@ -279,5 +281,5 @@ app.get('/api/historico/:latitud&:longitud&:tiempo',(req,res)=>{
             res.send(data)
         })
 
-    
+
 })
