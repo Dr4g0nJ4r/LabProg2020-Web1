@@ -125,8 +125,8 @@ app.get('/', function(req, res) {
 */
 app.get('/api/ciudades', (req, res) => {
         const { query } = req;
-        var cantidad = query.cantidad;
-        var desde = query.desde;
+        var cantidad = Number(query.cantidad);
+        var desde = Number(query.desde);
         var arrayCiudades = [];
         if (desde >= listaCiudades.length) {
             res.status(400).send(`Se excede el límite desde el que se quiere consultar. La lista solo cuenta con ${listaCiudades.length} ciudades`)
@@ -134,14 +134,18 @@ app.get('/api/ciudades', (req, res) => {
             if (cantidad <= 0) {
                 res.status(406).send(`Se ingresó un valor inválido de cantidad. Debe ingresar un número entero positivo.`)
             } else {
-                for (var index = desde; index < cantidad + desde; index++) {
+
+                for (var index = desde; index < (cantidad + desde) && index < listaCiudades.length; index++) {
                     var element = listaCiudades[index];
-                    arrayCiudades.push(element);
+                    if (element != null) {
+                        arrayCiudades.push(element);
+                    }
+                    console.log(index);
+
                 }
                 res.status(200).send(JSON.stringify(arrayCiudades));
             }
         }
-        console.log(arrayCiudades);
     })
     //Obtener ciudades por id
 app.get('/api/:id', (req, res) => {
