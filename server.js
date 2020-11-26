@@ -23,42 +23,40 @@ Ejemplo de json recibido con los campos y valores de forma correcta
     }
 */
 var jsonSchema = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'number',
-            required: true
-        },
-        name: {
-            type: 'string',
-            required: true
-        },
-        state: {
-            type: 'string',
-            required: true
-        },
-        country: {
-            type: 'string',
-            required: true
-        },
-        coord: {
-            type: 'object',
-            properties: {
-                lon: { type: 'number', required: true },
-                lat: { type: 'number', required: true }
+        type: 'object',
+        properties: {
+            id: {
+                type: 'number',
+                required: true
+            },
+            name: {
+                type: 'string',
+                required: true
+            },
+            state: {
+                type: 'string',
+                required: true
+            },
+            country: {
+                type: 'string',
+                required: true
+            },
+            coord: {
+                type: 'object',
+                properties: {
+                    lon: { type: 'number', required: true },
+                    lat: { type: 'number', required: true }
+                }
             }
         }
     }
-}
+    /*
+    Esquema de la consulta GET Pronóstico
+    */
 var querySchemaConsulta = {
         type: 'object',
         properties: {
-            latitud: {
-                type: 'string',
-                format: 'numeric',
-                required: true
-            },
-            longitud: {
+            id: {
                 type: 'string',
                 format: 'numeric',
                 required: true
@@ -189,24 +187,28 @@ app.put('/api/ciudad/:id', validate({ body: jsonSchema }), (req, res) => {
 
     })
     //endpoint para solicitar el pronostico en días de una ciudad.
-    //se estructura de la siguiente manera /pronostico?latitud={idlatitud_de_ciudad}&longitud={longitud_de_ciudad}&cantidad={número_de_días}&desde={número_de_día}
+    //se estructura de la siguiente manera /pronostico?id={id_ciudad_a_consultar}&cantidad={número_de_días}&desde={número_de_día}
 
-//esta consulta requiere de la longitud y de la latitud de la ciudad a consulatar
+//esta consulta requiere del ID de la ciudad a consultar
 //el número de días a consultar ( hasta 7 dias)
 //el número del día del cual se comienza a recorrer
 
-//ejemplo: la ciudad latitud = -26, longitud= -60, cantidad = 2, desde=3
+//ejemplo: la ciudad id=1, cantidad = 2, desde=3
 //devolverá el pronostico de neuquén, solo dos pronosticos a partir del tercer día.
-//ejemplo2: la ciudad latitud = -26, longitud= -60, cantidad = 2, desde=6
-//devolverá un error, debido a que solo hay hasta 7 pronosticos por día a partir del día actual.
-//ejemplo3: la ciudad latitud = -26, longitud= -60, cantidad = 7, desde=1
-//devolverá todos los pronosticos ( siete pronosticos) de neuquén
 
-//ejemplo de consula para neuquen: http://localhost:5000/api/consulta/q?latitud=-38.95&longitud=-68.06&cantidad=3&desde=1
+
+//ejemplo de consula para neuquen: http://localhost:5000/api/consulta/q?id=1&cantidad=3&desde=1
 app.get('/api/consulta/q', validate({ query: querySchemaConsulta }), (req, res) => {
         const { query } = req
-        var latitud = query.latitud
-        var longitud = query.longitud
+        var id = query.id
+        var ciudad = listaCiudades.find(ciudad => ciudad.id === Number(id))
+        console.log(ciudad);
+        if (ciudad != undefined) {
+            var latitud = ciudad.coord.lat
+            var longitud = ciudad.coord.lon
+            console.log(latitud);
+            console.log(longitud);
+        }
         var cantidad = query.cantidad
         var desde = query.desde
         var pronosticos = []
@@ -227,12 +229,12 @@ app.get('/api/consulta/q', validate({ query: querySchemaConsulta }), (req, res) 
                     .catch();
 
             } else {
-                res.status(404).send("la cantidad supera el limite de días")
+                res.status(400).send("la cantidad supera el limite de días")
             }
 
 
         } else {
-            res.status(404).send("la cantidad o el valor 'desde' son incorrectos")
+            res.status(400).send("la cantidad o el valor 'desde' son incorrectos")
         }
 
 
