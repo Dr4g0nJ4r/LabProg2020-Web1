@@ -7,7 +7,7 @@ var actual // datos actuales del clima
 var pronostico // datos 7 días después..
 var latitud = -38.95; //latitud de la ciudad de Neuquén
 var longitud = -68.06; //longitud de la ciudad de Neuquén
-var ciudadActual = "Neuquén";
+var ciudadActual = "Neuquen";
 
 
 
@@ -23,8 +23,8 @@ function ActualizarDatos(ciudad) {
 en cuanto a los datos del historico, realizar un llamado por cada día consultado hasta un maximo de 5 días antes
 de la fecha actual, luego los ordena de menor a mayor*/
 function actualizarActual(ciudad) {
-
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf`)
+/*
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf`)
         .then(Response => Response.json())
         .then(data => {
             setActual(data);
@@ -36,14 +36,40 @@ function actualizarActual(ciudad) {
             refrescarPanelPrincipal(data);
         })
         .catch(err => console.log(err));
+*/
+fetch('http://localhost:5000/api/actual/'+ciudad)
+.then(Response => Response.json())
+.then(data => {
+    setActual(data);
+    this.latitud = data.coord.lat;
+    this.longitud = data.coord.lon;
+    actualizarPronostico(this.latitud, this.longitud)
+    actualizarHistorico(this.latitud, this.longitud)
+        //Actualiza los datos del Panel Tiempo Actual (Panel Principal)
+    refrescarPanelPrincipal(data);
+})
+.catch(err => console.log(err));
+
 
 }
 /*Funcion que me sirve para realizar un llamado a la API y pedir los datos del pronostico climático de los
 próximos 7 días*/
 function actualizarPronostico(lat, lon) {
-    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
+    /*
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
         .then(Response => Response.json())
         .then(data => {
+            vaciarPronostico();
+            setPronostico(data.daily);
+            ordenarDatos(data.daily);
+            refrescarPanelPronostico();
+        })
+        .catch(err => console.log(err))
+*/
+fetch('http://localhost:5000/api/pronostico/'+lat+"&"+lon)
+.then(Response => Response.json())
+        .then(data => {
+            console.log(data.daily)
             vaciarPronostico();
             setPronostico(data.daily);
             ordenarDatos(data.daily);
@@ -103,7 +129,7 @@ function obtenerHora(t) {
 Este es un método asincronico, espera todas las respuestas de la API, antes de devolerlos*/
 async function llamadasHistorico(lat, lon) {
     for (i = 1; i <= 5; i++) {
-        var respuesta = await fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + lat + "&lon=" + lon + "&dt=" + tiempoUnix(i) + "&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") //historico
+        var respuesta = await fetch('http://localhost:5000/api/historico/'+lat+"&"+lon+"&"+tiempoUnix(i)) //historico
             .then(Response => Response.json())
             .then(data => {
                 setHistorico(data.current)
@@ -135,8 +161,8 @@ function llenarListaHistorial(dato) {
     ul.innerHTML = ''; //se asegura que no tenga contenido antes de agregar más items de la lista.
     for (x in dato) {
         let li = document.createElement("li");
-        li.className = "list-group-item";
-        li.appendChild(document.createTextNode(obtenerFecha(dato[x].dt) + "|" + "Temperatura: " + dato[x].temp + "Sensación Térmica: " + dato[x].feels_like))
+        li.className = "elemento-lista";
+        li.appendChild(document.createTextNode(obtenerFecha(dato[x].dt) + "-" + "Temp: " + dato[x].temp + " °C " + "- Viento: " + velocidadViento(dato[x].wind_speed) + " Km/h - " + "Humedad: " + dato[x].humidity + " % - " + dato[x].weather[0].description));
         ul.appendChild(li)
     }
 }

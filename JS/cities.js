@@ -1,114 +1,99 @@
+var ciudades = [];
+getCiudades()
 
-var cities = [];
-getCities()
-function getCities() {
+/////////////////////////////////////
+function getCiudad(id){
     fetch('./JS/listaCiudadesArgentina.json')
         .then(blob => blob.json())
         .then(data => {
-            setCities(data)
+            data.forEach(elemento => {
+                if(elemento.id == this.id){
+                    return elemento
+                }
+            });
+        })
+        .catch(err => console.log(err));
+}
+
+ function getCiudades() {
+     fetch('./JS/listaCiudadesArgentina.json')
+        .then(blob => blob.json())
+        .then(data => {
+            setCiudades(data)
         })
         .catch(err => console.log(err));
 }
 //extrae los nombres de las ciudades de Argentina
-function setCities(data) {
-    for (x in data) { cities.push(data[x].name) }
+function setCiudades(data) {
+    for (ciudad in data) { ciudades.push(data[ciudad].name) }
 }
 
-function obtenerCoordenadas(ciudad) {
-    let coordenadas = [];
-    let cont = 0;
-    while (encontrado && cont <= data.length) {
-        if (data[cont].name == ciudad) {
-            coordenadas.push(data[cont].coord.lat);
-            coordenadas.push(data[cont].coord.lon);
-            encontrado = true;
-        } else {
-            cont++
-
-        }
-
-    }
-    return coordenadas;
-}
-
-function autocomplete(inp) {
-    var arr = this.cities;
+function autocompletar(inp) {
+    var arr = this.ciudades;
     var currentFocus;
     inp.addEventListener("input", function (e) {
-        var a, b, i, val = this.value;
-        closeAllLists();
-        if (!val) { return false; }
+        var lista, item, i, valor = this.value;
+        cerrarTodaslasListas();
+        if (!valor) { return false; }
         currentFocus = -1;
-        a = document.createElement("DIV");
-        a.setAttribute("id", this.id + "autocomplete-list");
-        a.setAttribute("class", "autocomplete-items");
-        this.parentNode.appendChild(a);
+        lista = document.createElement("DIV");
+        lista.setAttribute("id", this.id + "autocomplete-list");
+        lista.setAttribute("class", "autocomplete-items");
+        this.parentNode.appendChild(lista);
         for (i = 0; i < arr.length; i++) {
-            /*check if the item starts with the same letters as the text field value:*/
-            if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                /*create a DIV element for each matching element:*/
-                b = document.createElement("DIV");
-                /*make the matching letters bold:*/
-                b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                b.innerHTML += arr[i].substr(val.length);
-                /*insert a input field that will hold the current array item's value:*/
-                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                /*execute a function when someone clicks on the item value (DIV element):*/
-                b.addEventListener("click", function (e) {
-                    /*insert the value for the autocomplete text field:*/
+            /*Controla si el item empieza con la misma letra que el campo de texto:*/
+            if (arr[i].substr(0, valor.length).toUpperCase() == valor.toUpperCase()) {
+                /*Crea una elemento de lista "DIV", por cada elemento:*/
+                item = document.createElement("DIV");
+                /*Hace que las letras que coninciden estén en negrita:*/
+                item.innerHTML = "<strong>" + arr[i].substr(0, valor.length) + "</strong>";
+                item.innerHTML += arr[i].substr(valor.length);
+                /*Insterta en el arreglo aquellos items en el que conicida el valor:*/
+                item.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                /*Ejecuta la funcion cuando se le da un click en el item:*/
+                item.addEventListener("click", function (e) {
+                    /*Inserta el valor para el campo de texto del autocompletado:*/
                     inp.value = this.getElementsByTagName("input")[0].value;
-                    /*close the list of autocompleted values,
-                    (or any other open lists of autocompleted values:*/
-                    closeAllLists();
+                    /*Cierra la lista de los valores del autocompletado:*/
+                    cerrarTodaslasListas();
                 });
-                a.appendChild(b);
+                lista.appendChild(item);
             }
         }
     });
-    /*execute a function presses a key on the keyboard:*/
+
     inp.addEventListener("keydown", function (e) {
         var x = document.getElementById(this.id + "autocomplete-list");
         if (x) x = x.getElementsByTagName("div");
         if (e.keyCode == 40) {
-            /*If the arrow DOWN key is pressed,
-            increase the currentFocus variable:*/
             currentFocus++;
-            /*and and make the current item more visible:*/
-            addActive(x);
-        } else if (e.keyCode == 38) { //up
-            /*If the arrow UP key is pressed,
-            decrease the currentFocus variable:*/
+            agregarActivo(x);
+        } else if (e.keyCode == 38) {
             currentFocus--;
-            /*and and make the current item more visible:*/
-            addActive(x);
+            agregarActivo(x);
         } else if (e.keyCode == 13) {
-            /*If the ENTER key is pressed, prevent the form from being submitted,*/
             e.preventDefault();
             if (currentFocus > -1) {
-                /*and simulate a click on the "active" item:*/
                 if (x) x[currentFocus].click();
             }
         }
     });
-    function addActive(x) {
-        /*a function to classify an item as "active":*/
+
+    function agregarActivo(x) {
         if (!x) return false;
-        /*start by removing the "active" class on all items:*/
-        removeActive(x);
+        removerActivo(x);
         if (currentFocus >= x.length) currentFocus = 0;
         if (currentFocus < 0) currentFocus = (x.length - 1);
-        /*add class "autocomplete-active":*/
         x[currentFocus].classList.add("autocomplete-active");
     }
-    function removeActive(x) {
-        /*a function to remove the "active" class from all autocomplete items:*/
+
+    function removerActivo(x) {
         for (var i = 0; i < x.length; i++) {
             x[i].classList.remove("autocomplete-active");
         }
     }
-    function closeAllLists(elmnt) {
-        /*close all autocomplete lists in the document,
-        except the one passed as an argument:*/
+
+    function cerrarTodaslasListas(elmnt) {
         var x = document.getElementsByClassName("autocomplete-items");
         for (var i = 0; i < x.length; i++) {
             if (elmnt != x[i] && elmnt != inp) {
@@ -116,8 +101,8 @@ function autocomplete(inp) {
             }
         }
     }
-    /*execute a function when someone clicks in the document:*/
+
     document.addEventListener("click", function (e) {
-        closeAllLists(e.target);
+        cerrarTodaslasListas(e.target);
     });
 }

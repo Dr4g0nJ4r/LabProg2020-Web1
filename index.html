@@ -26,122 +26,116 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="./index.html">CLIMA</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="./index.html">Inicio <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./historial.html">Historial</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./about-us.html">Acerca de</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!--Sección de Buscador-->
-    <div id="buscador">
-        <form autocomplete="off">
-            <div class="autocomplete" style="width:300px;">
-                <input id="campoDeBusqueda" class="form-control mr-sm-2" type="text" name="lugar" placeholder="Lugar">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="./index.html">CLIMA</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="./index.html">Inicio <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./historial.html">Historial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./about-us.html">Acerca de</a>
+                    </li>
+                </ul>
             </div>
-            <button class="btn btn-primary" type="button" onclick="ActualizarDatos(document.getElementById('campoDeBusqueda').value)">Buscar</button>
-        </form>
-    </div>
+        </nav>
+    </header>
+    <!--Sección de Buscador-->
+    <section id="buscador-section">
+        <div id="buscador">
+            <form autocomplete="off">
+                <div class="autocomplete" style="width:300px;">
+                    <input id="campoDeBusqueda" class="form-control mr-sm-2" type="text" name="lugar" placeholder="Lugar">
+                </div>
+                <button class="btn btn-primary" type="button" onclick="ActualizarDatos(document.getElementById('campoDeBusqueda').value)">Buscar</button>
+            </form>
+        </div>
+    </section>
     <!--Seccion Panel Actual-->
     <section id="panelCiudadFecha">
-        <div class="flex-container">
-            <div class="container panel">
+        <div class="contenedor" id="fecha-resumen">
+            <div class="contenedor-item-0" id="nombre-fecha">
                 <h4 id="fechaActual"></h4>
                 <h3 id="nombreCiudad"></h3>
             </div>
-            <div class="container panel">
+            <div class="contenedor-item-0" id="resumen-clima">
                 <h3 id="resumenClima"></h3>
                 <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="" id="iconoClima">
                 <h4 id="descripcionClima"></h4>
 
             </div>
         </div>
-    </section>
-    <section id="panelDatosActual">
-        <div class="flex-container">
-            <div class="container panel">
-                <div class="flex-container">
-                    <div class="container">
-                        <img src="iconos/001-thermometer-1.png" alt="iconoTermómetro">
-                    </div>
-                    <div class="container">
-                        <h3 id="temperaturaActual"></h3>
-                    </div>
-                    <div class="container">
-                        <h4 id="temperaturaMaxima"></h4>
-                        <h4 id="temperaturaMinima"></h4>
-                        <h4 id="sensacionTermicaActual"></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="container panel">
-                <div class="flex-container">
-                    <div class="container">
-                        <img src="" alt="" id="iconoViento">
-                    </div>
-                    <div class="container">
-                        <h3 id="vectorViento"></h3>
-                    </div>
-                </div>
-            </div>
-            <div class="container panel">
-                <div class="flex-container">
-                    <div class="container">
-                        <img src="iconos/003-humidity.png" alt="iconoHumedad">
-                    </div>
-                    <div class="container">
-                        <h4 id="humedadActual"></h4>
-                        <h4 id="presionActual"></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="container panel">
-                <div class="flex-container">
-                    <div class="container">
-                        <img src="iconos/023-sunrise.png" alt="iconoSunrise">
-                        <img src="iconos/030-sunset.png" alt="iconoSunset">
-                    </div>
-                    <div class="container">
-                        <h4 id="tiempoSunrise"></h4>
-                        <h4 id="tiempoSunset"></h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
 
+        <!--Seccion Panel Actual-->
+
+        <div class="contenedor" id="temp">
+            <div class="contenedor-item-1" id="temperatura">
+                <div class="contenedor-item-1-1" id="temp-actual">
+                    <h3 id="temperaturaActual"></h3>
+                </div>
+                <div class="contenedor-item-1-1" id="temp-min-max-sens">
+                    <h4 id="temperaturaMaxima"></h4>
+                    <h4 id="temperaturaMinima"></h4>
+                    <h4 id="sensacionTermicaActual"></h4>
+                </div>
+            </div>
+            <div class="contenedor-item-1" id="viento">
+                <div class="contenedor-item-1-2" id="imagen-viento">
+                    <img src="" alt="" id="iconoViento">
+                </div>
+                <div class="contenedor-item-1-2" id="vel-viento">
+                    <h3 id="vectorViento"></h3>
+                </div>
+            </div>
+        </div>
+        <div class="contenedor" id="hum-sol">
+            <div class="contenedor-item-2" id="humedad-presion">
+                <div class="contenedor-item-2-1" id="imagen-humedad">
+                    <img src="iconos/003-humidity.png" alt="iconoHumedad">
+                </div>
+                <div class="contenedor-item-2-1" id="hum-pres">
+                    <h4 id="humedadActual"></h4>
+                    <h4 id="presionActual"></h4>
+                </div>
+            </div>
+            <div class="contenedor-item-2" id="soles">
+                <div class="contenedor-item-2-3" id="imagen-sol">
+                    <img src="iconos/023-sunrise.png" alt="iconoSunrise">
+                    <img src="iconos/030-sunset.png" alt="iconoSunset">
+                </div>
+                <div class="contenedor-item-2-3" id="valor-tiempo-sol">
+                    <h4 id="tiempoSunrise"></h4>
+                    <h4 id="tiempoSunset"></h4>
+                </div>
+
+            </div>
         </div>
     </section>
-    <!--Seccion Panel Historial-Pronóstico-->
-    <section style="text-align:center" id="panelPronostico">
-        <div style="text-align: center;">
-            <h3>Pronóstico</h3>
-        </div>
+    <!--Seccion Panel Pronostico-Pronóstico-->
+    <div id="cartel-pronostico">
+        <h3>Pronóstico</h3>
+    </div>
+    <section id="panelPronostico">
         <div class="btn-group" role="group" style="text-align: center;" id="btn-group-pronostico">
 
         </div>
-        <div style="text-align: center;">
+        <div id="datos-pronostico">
             <h3 id="descripcionPronostico"></h3>
-            <img src="" alt="" id="logoPronostico">
+            <img id="logoPronostico">
             <h4 id="tempPronostico"></h4>
             <h4 id="vientoPronostico"></h4>
             <h4 id="humedadPronostico"></h4>
         </div>
     </section>
     <!--Sección Footer-->
-    <section>
+    <section id="pie">
         <footer>
             <div>
                 <p>Desarrollado por Ulises Jaramillo y Luis Keller</p>
@@ -155,8 +149,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script type="module" src="JS/cities.js"></script>
     <script>
-        ActualizarDatos("Neuquén");
-        autocomplete(document.getElementById("campoDeBusqueda"));
+        ActualizarDatos("Neuquen");
+        autocompletar(document.getElementById("campoDeBusqueda"));
     </script>
 </body>
 
