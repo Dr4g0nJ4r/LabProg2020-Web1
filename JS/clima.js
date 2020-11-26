@@ -55,8 +55,19 @@ fetch('http://localhost:5000/api/actual/'+ciudad)
 /*Funcion que me sirve para realizar un llamado a la API y pedir los datos del pronostico climático de los
 próximos 7 días*/
 function actualizarPronostico(lat, lon) {
+    /*
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
         .then(Response => Response.json())
+        .then(data => {
+            vaciarPronostico();
+            setPronostico(data.daily);
+            ordenarDatos(data.daily);
+            refrescarPanelPronostico();
+        })
+        .catch(err => console.log(err))
+*/
+fetch('http://localhost:5000/api/pronostico/'+lat+"&"+lon)
+.then(Response => Response.json())
         .then(data => {
             vaciarPronostico();
             setPronostico(data.daily);

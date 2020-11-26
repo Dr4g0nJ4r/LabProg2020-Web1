@@ -212,7 +212,7 @@ var actual //datos actuales del clima;
 var pronostico; //datos pronóstico
 var historico = []; //datos historico
 
-
+//Endpoint para obtener los datos actuales dependiendo de la ciudad
 app.get('/api/actual/:ciudad',(req,res)=>{
     const {params}=req
     const {ciudad}=params
@@ -225,6 +225,19 @@ app.get('/api/actual/:ciudad',(req,res)=>{
             res.send(data)
             }
         )
+
+    
+})
+
+app.get('/api/pronostico/:latitud&:longitud',(req,res)=>{
+    const {params}=req
+    const {latitud,longitud}=params
+
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
+        .then(Response => Response.json())
+        .then(data => {
+            res.send(data)
+        })
 
     
 })
