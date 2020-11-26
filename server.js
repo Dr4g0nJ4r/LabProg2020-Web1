@@ -194,7 +194,7 @@ app.use(function(err, req, res, next) {
 //devolverá el pronostico de neuquén, solo dos pronosticos a partir del tercer día.
 //ejemplo2: la ciudad latitud = -26, longitud= -60, cantidad = 2, desde=6
 //devolverá un error, debido a que solo hay hasta 7 pronosticos por día a partir del día actual.
-//ejemplo3: la ciudad latitud = -26, longitud= -60, cantidad = 7, desde=0
+//ejemplo3: la ciudad latitud = -26, longitud= -60, cantidad = 7, desde=1
 //devolverá todos los pronosticos ( siete pronosticos) de neuquén
 app.get('/api/consulta', (req, res) => {
     const { query } = req
@@ -203,14 +203,27 @@ app.get('/api/consulta', (req, res) => {
     var cantidad = query.cantidad
     var desde = query.desde
     var pronosticos = []
-    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
-        .then(Response => Response.json())
-        .then(data => {
+    
+    if(cantidad<=7 &&cantidad >1 && desde>=1 && desde<7){
+        // se establece un limite a la cantidad de días a consultar, que depende del día desde que se empieza a contar
+        var limiteCantidad = 7 - desde
+        if(cantidad<=limiteCantidad){
 
-
-
-            res.send(data)
+            fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
+            .then(Response => Response.json())
+            .then(data => {
+                for (let i = desde; i < cantidad; i++) {
+                    pronosticos.push(data.daily[i])
+                    
+                }
+            res.send(pronosticos)
         })
+
+        }
+        
+
+    }
+    
 
 
 })

@@ -69,6 +69,7 @@ function actualizarPronostico(lat, lon) {
 fetch('http://localhost:5000/api/pronostico/'+lat+"&"+lon)
 .then(Response => Response.json())
         .then(data => {
+            console.log(data.daily)
             vaciarPronostico();
             setPronostico(data.daily);
             ordenarDatos(data.daily);
