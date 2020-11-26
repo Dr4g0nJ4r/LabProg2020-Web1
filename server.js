@@ -72,6 +72,7 @@ app.get('/api/:id', (req, res) => {
     const { params } = req
     const { id } = params
     var encontrado = false
+    
     listaCiudades.forEach((ciudad) => {
         if (ciudad.id == id) {
             encontrado = true
@@ -79,7 +80,7 @@ app.get('/api/:id', (req, res) => {
         }
     })
     if (!encontrado) {
-        res.status(404).send('Not found');
+        res.status(404).send('No se ha encontrado la ciudad!');
     }
 })
 
@@ -195,8 +196,9 @@ app.use(function(err, req, res, next) {
 //devolverá un error, debido a que solo hay hasta 7 pronosticos por día a partir del día actual.
 //ejemplo3: la ciudad id= 1, cantidad = 7, desde=0
 //devolverá todos los pronosticos ( siete pronosticos) de neuquén
-app.get('/api/pronostico/', (req, res) => {
+app.get('/api/consulta', (req, res) => {
     const { query } = req
+    
 
 
 })
@@ -207,10 +209,7 @@ app.get('/api/pronostico/', (req, res) => {
 
 
 
-///////////////METODOS FETCH///////////////////
-var actual //datos actuales del clima;
-var pronostico; //datos pronóstico
-var historico = []; //datos historico
+///////////////ENDPOINTS PARA USO INTERNO///////////////////
 
 //Endpoint para obtener los datos actuales dependiendo de la ciudad
 app.get('/api/actual/:ciudad',(req,res)=>{
