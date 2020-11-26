@@ -1,31 +1,22 @@
-[{
-        "id": 1,
-        "name": "Neuquen",
-        "state": "",
-        "country": "AR",
-        "coord": {
-            "lon": -68.059097,
-            "lat": -38.951611
-        }
-    },
-    {
-        "id": 2,
-        "name": "Ushuaia",
-        "state": "",
-        "country": "AR",
-        "coord": {
-            "lon": -68.300003,
-            "lat": -54.799999
-        }
-    },
-    {
-        "id": 3,
-        "name": "Salta",
-        "state": "",
-        "country": "AR",
-        "coord": {
-            "lon": -65.411659,
-            "lat": -24.7859
-        }
+[
+  {
+    "id": 1,
+    "name": "Neuquén",
+    "state": "",
+    "country": "AR",
+    "coord": {
+      "lon": -68.059097,
+      "lat": -38.951611
     }
+  },
+  {
+    "id": 2,
+    "name": "Rosario",
+    "state": "",
+    "country": "AR",
+    "coord": {
+      "lon": -60.63932,
+      "lat": -32.946819
+    }
+  }
 ]

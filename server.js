@@ -154,7 +154,7 @@ app.post('/api/ciudad', validate({ body: jsonSchema }), (req, res) => {
             coord: body.coord
         }
         listaCiudades.push(nuevaCiudad);
-        //fs.write(nuevaCiudad);
+        guardarDatos(listaCiudades);
         ciudadNueva = listaCiudades.find(ciudad => ciudad.id === body.id);
         res.status(200).send(`Se creó una nueva ciudad ${ciudadNueva}`);
         console.log(listaCiudades);
@@ -183,6 +183,7 @@ app.put('/api/ciudad/:id', validate({ body: jsonSchema }), (req, res) => {
                     ciudad.coord = body.coord;
                 }
             })
+            guardarDatos(listaCiudades);
             res.status(200).send(`Se actualizó la ciudad con el id ${id}`);
         }
 
@@ -311,3 +312,12 @@ app.get('/api/historico/:latitud&:longitud&:tiempo', (req, res) => {
 
 
 })
+
+function guardarDatos(listaCiudades) {
+    let lista = JSON.stringify(listaCiudades, null, 2)
+    fs.writeFile('./JS/listaCiudadesArgentina.json', lista, function(err, data) {
+
+        if (err) { return console.log(err); }
+        console.log(`${data} > listaCiudadesArgentina.json`)
+    });
+}
