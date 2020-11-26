@@ -350,7 +350,7 @@ app.get('/api/historico/:latitud&:longitud&:tiempo', (req, res) => {
 
 function guardarDatos(listaCiudades) {
     let lista = JSON.stringify(listaCiudades, null, 2)
-    fs.writeFile('./JS/listaCiudadesArgentina.json', lista, function(err, data) {
+    fs.writeFileSync('./JS/listaCiudadesArgentina.json', lista, function(err, data) {
 
         if (err) { return console.log(err); }
         console.log(`${data} > listaCiudadesArgentina.json`)
