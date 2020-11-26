@@ -186,19 +186,30 @@ app.use(function(err, req, res, next) {
     //endpoint para solicitar el pronostico en días de una ciudad.
     //se estructura de la siguiente manera /pronostico?q={id_de_ciudad}&cantidad={número_de_días}&desde={número_de_día}
 
-//esta consulta requiere de un id de la ciudad a consulatar
+//esta consulta requiere de la longitud y de la latitud de la ciudad a consulatar
 //el número de días a consultar ( hasta 7 dias)
 //el número del día del cual se comienza a recorrer
 
-//ejemplo: la ciudad id= 1, cantidad = 2, desde=3
+//ejemplo: la ciudad latitud = -26, longitud= -60, cantidad = 2, desde=3
 //devolverá el pronostico de neuquén, solo dos pronosticos a partir del tercer día.
-//ejemplo2: la ciudad id= 1, cantidad = 2, desde=6
+//ejemplo2: la ciudad latitud = -26, longitud= -60, cantidad = 2, desde=6
 //devolverá un error, debido a que solo hay hasta 7 pronosticos por día a partir del día actual.
-//ejemplo3: la ciudad id= 1, cantidad = 7, desde=0
+//ejemplo3: la ciudad latitud = -26, longitud= -60, cantidad = 7, desde=0
 //devolverá todos los pronosticos ( siete pronosticos) de neuquén
 app.get('/api/consulta', (req, res) => {
     const { query } = req
-    
+    var latitud = query.latitud
+    var longitud = query.longitud
+    var cantidad = query.cantidad
+    var desde = query.desde
+
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
+        .then(Response => Response.json())
+        .then(data => {
+
+
+            res.send(data)
+        })
 
 
 })
@@ -257,15 +268,3 @@ app.get('/api/historico/:latitud&:longitud&:tiempo',(req,res)=>{
 function fetchPronostico(latitud, longitud) {
     return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")
 }
-
-//////////TEST/////////////
-//este fetch funciona bien!
-
-fetch(`https://api.openweathermap.org/data/2.5/weather?q=Ushuaia&units=metric&lang=es&appid=073b5617fc4dbf48ce277078f57f3caf`)
-    .then(blob => blob.json())
-    .then(data => {
-        console.log(data)
-        this.actual = data
-            //refrescarPanelPrincipal(data)
-    })
-    .catch(err => console.log(err));
