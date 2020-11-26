@@ -220,9 +220,11 @@ app.get('/api/consulta/q', (req, res) => {
             res.send(pronosticos)
         })
 
+        }else{
+            res.status(404).send("la cantidad supera el limite de días")
         }
         
-
+        res.status(404).send("la cantidad o el valor desde son incorrectos")
     }
     
 
