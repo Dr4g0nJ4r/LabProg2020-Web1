@@ -203,7 +203,7 @@ app.put('/api/ciudad/:id', validate({ body: jsonSchemaActualizarCiudad }), (req,
         } else {
             listaCiudades.forEach((ciudad) => {
                 if (ciudad.id == id) {
-                    ciudad.id = id
+                    ciudad.id = Number(id)
                     ciudad.name = body.name;
                     ciudad.state = body.state;
                     ciudad.country = body.country;
