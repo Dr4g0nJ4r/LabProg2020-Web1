@@ -22,13 +22,41 @@ Ejemplo de json recibido con los campos y valores de forma correcta
         }
     }
 */
-var jsonSchema = {
+var jsonSchemaCrearCiudad = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'number',
+            required: true
+        },
+        name: {
+            type: 'string',
+            required: true
+        },
+        state: {
+            type: 'string',
+            required: true
+        },
+        country: {
+            type: 'string',
+            required: true
+        },
+        coord: {
+            type: 'object',
+            properties: {
+                lon: { type: 'number', required: true },
+                lat: { type: 'number', required: true }
+            }
+        }
+    }
+}
+
+/*
+Esquema json para actualizar ciudad
+*/
+var jsonSchemaActualizarCiudad = {
         type: 'object',
         properties: {
-            id: {
-                type: 'number',
-                required: true
-            },
             name: {
                 type: 'string',
                 required: true
@@ -48,7 +76,8 @@ var jsonSchema = {
                     lat: { type: 'number', required: true }
                 }
             }
-        }
+        },
+        additionalProperties: false
     }
     /*
     Esquema de la consulta GET Pronóstico
@@ -89,7 +118,32 @@ app.get('/', function(req, res) {
     res.sendFile(ruta.join(__dirname + '/index.html'))
 })
 
-//Obtener ciudades por id
+/*
+  Endpoint get que permite consultar varias ciudades.
+  Estructura: api/ciudad?cantidad={cantidad de ciudades a retornar}&desde={desde que ciudad se retorna}
+
+*/
+app.get('/api/ciudades', (req, res) => {
+        const { query } = req;
+        var cantidad = query.cantidad;
+        var desde = query.desde;
+        var arrayCiudades = [];
+        if (desde >= listaCiudades.length) {
+            res.status(400).send(`Se excede el límite desde el que se quiere consultar. La lista solo cuenta con ${listaCiudades.length} ciudades`)
+        } else {
+            if (cantidad <= 0) {
+                res.status(406).send(`Se ingresó un valor inválido de cantidad. Debe ingresar un número entero positivo.`)
+            } else {
+                for (var index = desde; index < cantidad + desde; index++) {
+                    var element = listaCiudades[index];
+                    arrayCiudades.push(element);
+                }
+                res.status(200).send(JSON.stringify(arrayCiudades));
+            }
+        }
+        console.log(arrayCiudades);
+    })
+    //Obtener ciudades por id
 app.get('/api/:id', (req, res) => {
     const { params } = req
     const { id } = params
@@ -106,34 +160,10 @@ app.get('/api/:id', (req, res) => {
     }
 })
 
-/*
-  Endpoint get que permite consultar varias ciudades.
-  Estructura: api/ciudad?cantidad={cantidad de ciudades a retornar}&desde={desde que ciudad se retorna}
 
-*/
-app.get('/api/ciudades', (req, res) => {
-    const { query } = req;
-    let cantidad = query.cantidad;
-    let desde = query.desde;
-    let arrayCiudades = [];
-    if (desde >= listaCiudades.length) {
-        res.status(406).send(`Se excede el límite desde el que se quiere consultar. La lista solo cuenta con ${listaCiudades.length} ciudades`)
-    } else {
-        if (cantidad <= 0) {
-            res.status(406).send(`Se ingresó un valor inválido de cantidad. Debe ingresar un número entero positivo.`)
-        } else {
-            for (let index = desde; index < cantidad + desde; index++) {
-                let element = listaCiudades[index];
-                arrayCiudades.push(element);
-            }
-            res.status(200).send(arrayCiudades);
-        }
-    }
-    console.log(arrayCiudades);
-})
 
 //Publica una nueva ciudad POST. Se valida con el jsonSchema para verificar campos y valores
-app.post('/api/ciudad', validate({ body: jsonSchema }), (req, res) => {
+app.post('/api/ciudad', validate({ body: jsonSchemaCrearCiudad }), (req, res) => {
     const { body } = req;
     let existe = false;
     listaCiudades.forEach((ciudad) => {
@@ -162,7 +192,7 @@ app.post('/api/ciudad', validate({ body: jsonSchema }), (req, res) => {
 
 
 //Publica un endpoint para actualizar datos de la ciudad. Se valida con el jsonSchema para verificar campos y valores
-app.put('/api/ciudad/:id', validate({ body: jsonSchema }), (req, res) => {
+app.put('/api/ciudad/:id', validate({ body: jsonSchemaActualizarCiudad }), (req, res) => {
         const { params } = req;
         const { id } = params;
         const { body } = req;
@@ -171,10 +201,9 @@ app.put('/api/ciudad/:id', validate({ body: jsonSchema }), (req, res) => {
         if (ciudad == undefined) {
             res.status(200).send(`No existe una ciudad con el id ${id}`);
         } else {
-
             listaCiudades.forEach((ciudad) => {
                 if (ciudad.id == id) {
-                    ciudad.id = body.id;
+                    ciudad.id = id
                     ciudad.name = body.name;
                     ciudad.state = body.state;
                     ciudad.country = body.country;
