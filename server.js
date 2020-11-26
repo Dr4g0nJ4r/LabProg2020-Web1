@@ -56,7 +56,7 @@ app.listen(5000)
 
 
 
-//estos son meddlewares
+//estos son middlewares
 //para que el param tenga un body.
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -183,8 +183,8 @@ app.use(function(err, req, res, next) {
             next(err);
         }
     })
-    //endpoint para solicitar el pronostico en días de una ciudad.
-    //se estructura de la siguiente manera /pronostico?q={id_de_ciudad}&cantidad={número_de_días}&desde={número_de_día}
+//endpoint para solicitar el pronostico en días de una ciudad.
+//se estructura de la siguiente manera /pronostico?latitud={idlatitud_de_ciudad}&longitud={longitud_de_ciudad}&cantidad={número_de_días}&desde={número_de_día}
 
 //esta consulta requiere de la longitud y de la latitud de la ciudad a consulatar
 //el número de días a consultar ( hasta 7 dias)
@@ -202,10 +202,11 @@ app.get('/api/consulta', (req, res) => {
     var longitud = query.longitud
     var cantidad = query.cantidad
     var desde = query.desde
-
+    var pronosticos = []
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
         .then(Response => Response.json())
         .then(data => {
+
 
 
             res.send(data)
@@ -264,7 +265,3 @@ app.get('/api/historico/:latitud&:longitud&:tiempo',(req,res)=>{
 
     
 })
-
-function fetchPronostico(latitud, longitud) {
-    return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf")
-}
