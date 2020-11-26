@@ -196,7 +196,9 @@ app.use(function(err, req, res, next) {
 //devolverá un error, debido a que solo hay hasta 7 pronosticos por día a partir del día actual.
 //ejemplo3: la ciudad latitud = -26, longitud= -60, cantidad = 7, desde=1
 //devolverá todos los pronosticos ( siete pronosticos) de neuquén
-app.get('/api/consulta', (req, res) => {
+
+//ejemplo de consula para neuquen: http://localhost:5000/api/consulta/q?latitud=-38.95&longitud=-68.06&cantidad=3&desde=1
+app.get('/api/consulta/q', (req, res) => {
     const { query } = req
     var latitud = query.latitud
     var longitud = query.longitud
@@ -212,9 +214,8 @@ app.get('/api/consulta', (req, res) => {
             fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitud + "&lon=" + longitud + "&lang=es&exclude=current,minutely,hourly,alerts&units=metric&appid=073b5617fc4dbf48ce277078f57f3caf") // pronostico
             .then(Response => Response.json())
             .then(data => {
-                for (let i = desde; i < cantidad; i++) {
+                for (let i = desde; i <= cantidad; i++) {
                     pronosticos.push(data.daily[i])
-                    
                 }
             res.send(pronosticos)
         })
