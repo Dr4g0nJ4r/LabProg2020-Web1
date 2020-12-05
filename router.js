@@ -2,7 +2,7 @@
 //para ser usado por el server.
 const express = require("express");
 const router = express.Router();
-const lista = require("./controller");
+const listaDeFunciones = require("./controller");
 const validador = require("./JS/validador");
 const validate = require("express-jsonschema").validate;
 
@@ -13,20 +13,20 @@ const validate = require("express-jsonschema").validate;
   Estructura: api/ciudad?cantidad={cantidad de ciudades a retornar}&desde={desde que ciudad se retorna}
 
 */
-router.get("/ciudades", lista.getCiudadesPorRango);
+router.get("/ciudades", listaDeFunciones.getCiudadesPorRango);
 //Obtener ciudades por id
-router.get("/:id", lista.getCiudadesPorId);
+router.get("/ciudades/:id", listaDeFunciones.getCiudadesPorId);
 //Publica una nueva ciudad POST. Se valida con el jsonSchema para verificar campos y valores
 router.post(
   "/api/ciudad",
   validate({ body: validador.jsonSchemaCrearCiudad }),
-  lista.postCiudad
+  listaDeFunciones.postCiudad
 );
 //Publica un endpoint para actualizar datos de la ciudad. Se valida con el jsonSchema para verificar campos y valores
 router.put(
   "/ciudad/:id",
   validate({ body: validador.jsonSchemaActualizarCiudad }),
-  lista.actualizarCiudad
+  listaDeFunciones.actualizarCiudad
 );
 //endpoint para solicitar el pronostico en días de una ciudad.
 //se estructura de la siguiente manera /pronostico?id={id_ciudad_a_consultar}&cantidad={número_de_días}&desde={número_de_día}
@@ -40,20 +40,26 @@ router.put(
 
 //ejemplo de consula para neuquen: http://localhost:5000/api/consulta/q?id=1&cantidad=3&desde=0
 router.get(
-  "/consulta/q",
+  "/clima/pronostico/consulta/q",
   validate({ query: validador.querySchemaConsulta }),
-  lista.consultaPronosticos
+  listaDeFunciones.consultaPronosticos
 );
 
 ///////////////ENDPOINTS PARA USO INTERNO///////////////////
 
 //Endpoint para obtener los datos actuales dependiendo de la ciudad
 
-router.get("/actual/:ciudad", lista.getDatosClimaActual);
+router.get("/clima/actual/:ciudad", listaDeFunciones.getDatosClimaActual);
 
-router.get("/pronostico/:latitud&:longitud", lista.getPronosticos);
+router.get(
+  "/clima/pronostico/:latitud&:longitud",
+  listaDeFunciones.getPronosticos
+);
 
-router.get("/historico/:latitud&:longitud&:tiempo", lista.getHistoricos);
+router.get(
+  "/clima/historico/:latitud&:longitud&:tiempo",
+  listaDeFunciones.getHistoricos
+);
 
 //En caso de surgir un error con el esquema del Json, se ejecuta la siguiente función que retorna información sobre el error
 router.use((err, req, res, next) => {

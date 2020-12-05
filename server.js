@@ -3,9 +3,7 @@ const bodyParser = require("body-Parser");
 const app = express();
 const ruta = require("path");
 const fs = require("fs");
-//const { response } = require("express");
 const router = require("./router");
-//const validate = require("express-jsonschema").validate;
 
 //escucha en el puerto 5000
 app.listen(5000);

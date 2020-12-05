@@ -1,6 +1,5 @@
 //CONTROLADOR
 //contiene toda la logica de los endpoints.
-
 const listaCiudades = require("./JS/listaCiudadesArgentina.json");
 const fetch = require("node-fetch");
 
